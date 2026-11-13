@@ -217,7 +217,7 @@ def visual(kind):
     "dashboard": '<div class="panel"><div class="paneltop"><span>ESPACE CABINET</span><span>VUE DU JOUR</span></div><div class="item"><span class="dot"></span>Demande reçue <span class="status">À traiter</span></div><div class="item"><span class="dot"></span>Créneau sélectionné <span class="status">Visible</span></div><div class="item"><span class="dot"></span>Coordonnées patient <span class="status">Enregistrées</span></div></div>',
     "cta": '<div class="ctavisual"><div class="ctalogо">RENDE<b>VO</b></div><div class="ctal ine"></div><div class="ctasmall">RÉSERVATION · SUIVI · ORGANISATION</div></div>'
     }
-    return templates.get(kind, templates["phone"]).replace("ctalogо","ct alogo").replace("ct alogo","ct alogo").replace("ctal ine","ctaline")
+    return templates.get(kind, templates["phone"]).replace("ctalogо","ctalogo")
 
 def run(cmd):
     subprocess.run(cmd, check=True)
