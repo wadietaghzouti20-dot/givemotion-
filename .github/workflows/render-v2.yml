@@ -128,13 +128,19 @@ jobs:
           ]
           base_css = """
           *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131d;color:#f4f8f7;font-family:Arial,sans-serif}
-          .scene{width:1080px;height:1920px;padding:112px 82px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 82% 16%,#17483f 0%,transparent 43%),linear-gradient(145deg,#06121b,#102431 58%,#07131d)}
-          .top{font-size:34px;font-weight:800;letter-spacing:9px;margin-bottom:105px}.mint{color:#8ee5c2}.tag{font-size:25px;letter-spacing:5px;text-transform:uppercase;color:#8ee5c2;font-weight:bold}
-          h1{font-size:94px;line-height:1.05;letter-spacing:-4px;margin:36px 0 35px;font-weight:800}p{font-size:38px;line-height:1.4;color:#b9cbd0;margin:0}
-          .line{height:3px;width:150px;background:#8ee5c2;margin:50px 0}.cta{display:inline-block;background:#8ee5c2;color:#071c17;padding:27px 34px;border-radius:18px;font-size:30px;font-weight:bold;margin-top:48px;width:max-content}
+          .scene{width:1080px;height:1920px;padding:100px 76px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 82% 16%,#17483f 0%,transparent 43%),linear-gradient(145deg,#06121b,#102431 58%,#07131d);animation:sceneIn .8s both}
+          .scene:before,.scene:after{content:"";position:absolute;border:2px solid #8ee5c222;border-radius:50%;right:-460px;top:220px;animation:orbit 18s linear infinite}
+          .scene:before{width:900px;height:900px}.scene:after{width:560px;height:560px;right:-290px;top:390px;animation-duration:12s;animation-direction:reverse}
+          @keyframes sceneIn{from{opacity:0;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}@keyframes orbit{to{transform:rotate(360deg)}}
+          @keyframes rise{from{opacity:0;transform:translateY(55px)}to{opacity:1;transform:translateY(0)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+          .top,.tag,h1,p,.line,.cta,.footer,.num,.mock{position:relative;z-index:2}
+          .top{font-size:34px;font-weight:800;letter-spacing:9px;margin-bottom:70px}.mint{color:#8ee5c2}.tag{font-size:25px;letter-spacing:5px;text-transform:uppercase;color:#8ee5c2;font-weight:bold;animation:rise .7s .1s both}
+          h1{font-size:86px;line-height:1.05;letter-spacing:-4px;margin:36px 0 35px;font-weight:800;animation:rise .8s .25s both}p{font-size:36px;line-height:1.4;color:#b9cbd0;margin:0;animation:rise .8s .45s both}
+          .line{height:3px;width:150px;background:#8ee5c2;margin:40px 0;animation:rise .8s .3s both}.cta{display:inline-block;background:#8ee5c2;color:#071c17;padding:27px 34px;border-radius:18px;font-size:30px;font-weight:bold;margin-top:48px;width:max-content;animation:pulse 2.4s infinite}
+          .mock{margin-top:45px;padding:30px;border:1px solid #8ee5c244;border-radius:28px;background:#102a36dd;box-shadow:0 25px 70px #0005;animation:float 4s ease-in-out infinite}
+          .mockhead{display:flex;justify-content:space-between;font-size:23px;color:#a7c4c6;margin-bottom:20px}.mockrow{display:flex;align-items:center;gap:16px;padding:19px 0;border-top:1px solid #ffffff18;font-size:25px}.dot{width:16px;height:16px;border-radius:50%;background:#8ee5c2;box-shadow:0 0 22px #8ee5c288}.pill{margin-left:auto;color:#8ee5c2;background:#8ee5c21c;padding:9px 14px;border-radius:20px;font-size:18px}
           .footer{position:absolute;bottom:80px;left:82px;right:82px;display:flex;justify-content:space-between;color:#8199a2;font-size:21px;letter-spacing:3px}
-          .num{position:absolute;right:82px;top:80px;color:#8ee5c2;font-size:24px;letter-spacing:4px}
-          """
+          .num{position:absolute;right:82px;top:80px;color:#8ee5c2;font-size:24px;letter-spacing:4px}          """
           for i,r in enumerate(reels,1):
             scenes = [
               (r["hook"],r["title"],r["body"],"LE PROBLÈME"),
