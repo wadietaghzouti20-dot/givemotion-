@@ -1,0 +1,57 @@
+name: RENDEVO V4 — Side-panel story reels
+on:
+  push:
+    branches: [main]
+    paths:
+      - "render_v4.py"
+      - ".github/workflows/render-v4.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install rendering tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save givemotion
+          npx givemotion install
+          npx givemotion doctor
+          python -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install edge-tts
+      - name: Render the 10 redesigned reels
+        env:
+          GIVEMOTION_NO_SANDBOX: "1"
+        run: |
+          python render_v4.py
+      - name: Verify MP4 outputs
+        run: |
+          python - <<'PY'
+          import glob, subprocess, os
+          files = sorted(glob.glob("out/*.mp4"))
+          assert len(files) == 10, f"Expected 10 videos, got {len(files)}"
+          for f in files:
+              duration = float(subprocess.check_output([
+                  "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                  "-of", "default=noprint_wrappers=1:nokey=1", f
+              ]).decode().strip())
+              assert duration >= 24, f"{f} is too short: {duration}"
+              print(os.path.basename(f), round(duration, 1), "seconds", os.path.getsize(f), "bytes")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RENDEVO-V4-Redesigned-Side-Panel-Reels
+          path: out/*.mp4
+          if-no-files-found: error
+          retention-days: 7
