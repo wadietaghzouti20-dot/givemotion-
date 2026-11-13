@@ -1,0 +1,126 @@
+name: RENDEVO V3 — Story-led animated reels
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/render-v3.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Givemotion, Chrome and audio tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg python3-venv
+          npm install --no-save givemotion
+          npx givemotion install
+          npx givemotion doctor
+          python3 -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install edge-tts
+      - name: Write ten original story scripts
+        run: |
+          mkdir -p compositions out
+          cat > /tmp/reels.json <<'JSON'
+          [
+            {"slug":"01-phone-interruptions","hook":"LE TÉLÉPHONE SONNE EN PLEIN SOIN.","voice":"Vous êtes en plein soin, et le téléphone sonne encore. Votre équipe doit interrompre son travail, répondre, chercher un horaire et noter la demande. Avec RENDEVO, le patient peut envoyer sa demande de rendez-vous sur une page simple, depuis son téléphone. Votre équipe retrouve les informations dans un tableau de suivi et peut traiter la demande plus facilement. RENDEVO aide votre cabinet à mieux organiser les prises de rendez-vous."},
+            {"slug":"02-missed-calls","hook":"UN APPEL MANQUÉ. UN PATIENT QUI ATTEND.","voice":"Un patient appelle votre cabinet. Personne ne peut répondre à cet instant. Il attend, puis passe parfois à autre chose. Vous ne pouvez pas répondre à chaque appel immédiatement, et c’est normal. RENDEVO ajoute une autre possibilité : une page où le patient peut envoyer sa demande depuis son téléphone. Votre équipe retrouve les informations dans un tableau de suivi, et le patient reçoit une confirmation par e-mail lorsque sa demande est enregistrée. Restez accessible avec RENDEVO."},
+            {"slug":"03-whatsapp-chaos","hook":"VOS DEMANDES SONT PARTOUT ?","voice":"Une demande arrive sur WhatsApp. Une autre par téléphone. Une troisième est notée sur un papier près du bureau. Quand les informations sont dispersées, le suivi devient compliqué. RENDEVO propose un parcours de réservation en ligne et rassemble les demandes dans un tableau de suivi. Votre équipe peut retrouver les informations utiles au même endroit, et le patient reçoit une confirmation par e-mail. Un outil clair pour mieux organiser le travail du cabinet."},
+            {"slug":"04-after-hours","hook":"VOTRE CABINET EST FERMÉ. ET LES DEMANDES ?","voice":"Il est vingt et une heures. Votre secrétariat a fermé, mais un patient veut organiser sa prochaine visite. Avec RENDEVO, il peut consulter votre page de réservation et envoyer une demande en ligne depuis son téléphone, même en dehors des horaires d’accueil. Votre équipe retrouve ensuite les informations dans son tableau de suivi et gère la demande. Vous gardez vos horaires habituels, tout en offrant aux patients un moyen pratique de vous contacter."},
+            {"slug":"05-double-booking","hook":"DEUX PATIENTS. LE MÊME CRÉNEAU ?","voice":"Deux patients arrivent pour le même horaire. La journée commence avec un problème que personne ne voulait. Quand les disponibilités sont suivies manuellement, les erreurs deviennent plus faciles. RENDEVO est conçu pour vérifier les créneaux déjà occupés avant de proposer une disponibilité, selon la configuration du cabinet. Les demandes et leur suivi sont regroupés dans un système organisé. Votre équipe garde la main sur les rendez-vous, avec moins de risques de confusion."},
+            {"slug":"06-reception-overload","hook":"VOTRE SECRÉTARIAT FAIT TOUT EN MÊME TEMPS ?","voice":"Votre secrétariat accueille les patients, répond au téléphone, vérifie les horaires, note les coordonnées et confirme les rendez-vous. Toutes ces petites tâches prennent du temps, surtout quand elles arrivent en même temps. RENDEVO donne aux patients un parcours de demande en ligne et regroupe les informations dans un tableau de suivi. Les confirmations peuvent être envoyées par e-mail. Votre équipe reste essentielle, mais elle dispose d’un outil plus clair pour organiser les demandes."},
+            {"slug":"07-patient-journey","hook":"PRENDRE RENDEZ-VOUS DEVRAIT ÊTRE SIMPLE.","voice":"Pensez à votre patient. Il veut simplement choisir un service, trouver une date et envoyer sa demande. Il ne veut pas chercher longtemps le bon numéro ni multiplier les messages. RENDEVO propose une page de réservation adaptée au téléphone, avec un parcours clair en plusieurs étapes. La demande arrive ensuite dans le suivi du cabinet et une confirmation par e-mail peut être envoyée. Une expérience plus simple dès le premier contact."},
+            {"slug":"08-lost-information","hook":"VOUS RECHERCHEZ ENCORE LES INFOS D’UN PATIENT ?","voice":"Quel était le service demandé ? Quelle date avait été proposée ? Où est passé le numéro du patient ? Quand les demandes sont dispersées, retrouver une information peut prendre plus de temps que prévu. RENDEVO rassemble les informations envoyées par le patient dans un tableau de suivi, pour que votre équipe puisse les consulter plus facilement. Le patient suit un parcours de demande clair, et le cabinet dispose d’une vue plus organisée."},
+            {"slug":"09-first-impression","hook":"VOTRE ACCUEIL EN LIGNE REFLÈTE VOTRE CABINET.","voice":"Votre cabinet soigne son accueil, son espace et la qualité de son service. Mais qu’en est-il du premier contact en ligne ? Une page confuse ne reflète pas forcément le sérieux de votre équipe. RENDEVO crée un parcours de réservation personnalisé, adapté à l’identité de votre cabinet et pensé pour les téléphones. Le patient sait où aller et quelles informations envoyer. Faites de la prise de rendez-vous une partie soignée de votre accueil."},
+            {"slug":"10-how-it-works","hook":"RENDEVO, CONCRÈTEMENT, COMMENT ÇA MARCHE ?","voice":"Voici comment RENDEVO fonctionne. Le patient ouvre la page personnalisée de votre cabinet. Il choisit le service, consulte les dates et horaires disponibles, puis renseigne ses coordonnées. Il envoie sa demande en quelques étapes. Votre équipe retrouve les informations dans un tableau de suivi et le patient reçoit une confirmation par e-mail lorsque la demande est enregistrée. RENDEVO relie le parcours du patient à l’organisation du cabinet, dans un système conçu pour être simple à utiliser."}
+          ]
+          JSON
+          python3 - <<'PY'
+          import json,pathlib
+          for r in json.load(open('/tmp/reels.json',encoding='utf-8')):
+            pathlib.Path('compositions',r['slug']+'.txt').write_text(r['voice'],encoding='utf-8')
+          print('10 scripts ready')
+          PY
+      - name: Generate French female narration and timed subtitles
+        run: |
+          python3 - <<'PY'
+          import json,subprocess
+          for r in json.load(open('/tmp/reels.json',encoding='utf-8')):
+            s=r['slug']
+            subprocess.run(['.venv/bin/edge-tts','--voice','fr-FR-DeniseNeural','--rate=-7%','--pitch=+1Hz','--file',f'compositions/{s}.txt','--write-media',f'out/{s}-voice.mp3','--write-subtitles',f'out/{s}.vtt'],check=True)
+          PY
+      - name: Build five animated scenes and render
+        env:
+          GIVEMOTION_NO_SANDBOX: "1"
+        run: |
+          cat > /tmp/render.py <<'PY'
+          import json,pathlib,subprocess
+          reels=json.load(open('/tmp/reels.json',encoding='utf-8'))
+          css="""
+          *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131d;color:#f4faf8;font-family:Arial,sans-serif}
+          .scene{width:1080px;height:1920px;padding:105px 78px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 82% 16%,#17483f 0%,transparent 42%),radial-gradient(ellipse at 10% 85%,#15384b 0%,transparent 38%),linear-gradient(145deg,#06121b,#102431 60%,#07131d)}
+          .scene:before{content:"";position:absolute;width:900px;height:900px;border:2px solid #8ee5c222;border-radius:50%;right:-520px;top:220px;animation:spin 24s linear infinite}
+          @keyframes spin{to{transform:rotate(360deg)}}@keyframes rise{from{opacity:0;transform:translateY(55px)}to{opacity:1;transform:translateY(0)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-17px)}}@keyframes slide{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+          .brand,.count,.eyebrow,h1,p,.visual,.footer{position:relative;z-index:2}.brand{position:absolute;top:74px;left:78px;font-size:34px;font-weight:900;letter-spacing:9px}.brand b{color:#8ee5c2}.count{position:absolute;top:83px;right:78px;color:#8ee5c2;font-size:23px;letter-spacing:4px}
+          .eyebrow{font-size:24px;letter-spacing:4px;color:#8ee5c2;font-weight:800;margin-bottom:28px;animation:rise .7s .1s both}h1{font-size:79px;line-height:1.07;letter-spacing:-3px;margin:0 0 27px;font-weight:850;animation:rise .8s .2s both}p{font-size:34px;line-height:1.42;color:#bfd0d3;margin:0;animation:rise .8s .35s both}
+          .visual{margin-top:55px;animation:float 4s ease-in-out infinite}.phone{width:470px;margin:auto;background:#f8fbf9;color:#17302d;border:10px solid #dce8e3;border-radius:58px;padding:30px;box-shadow:0 30px 90px #0008;transform:rotate(-2deg)}.notch{height:18px;width:110px;background:#dce8e3;border-radius:0 0 16px 16px;margin:-30px auto 26px}.field{background:#fff;border:1px solid #d9e2df;border-radius:15px;padding:18px;margin:13px 0;font-size:22px;color:#60736f}.submit{background:#0e5143;color:#fff;border-radius:15px;padding:20px;text-align:center;font-size:22px;font-weight:bold;margin-top:20px}
+          .dash{border:1px solid #41645e;background:#102b36ee;border-radius:30px;padding:32px;box-shadow:0 25px 70px #0007}.dashhead{display:flex;justify-content:space-between;color:#c8dbd6;font-size:23px;margin-bottom:25px}.row{display:flex;gap:15px;align-items:center;padding:20px 5px;border-top:1px solid #ffffff1c;font-size:23px;animation:slide .7s both}.row:nth-child(3){animation-delay:.18s}.row:nth-child(4){animation-delay:.36s}.dot{height:15px;width:15px;border-radius:50%;background:#8ee5c2;box-shadow:0 0 18px #8ee5c2}.pill{margin-left:auto;color:#8ee5c2;background:#8ee5c21c;padding:9px 13px;border-radius:22px;font-size:18px}
+          .calendar{border:1px solid #41645e;background:#102b36ee;border-radius:30px;padding:32px}.days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:22px 0}.day{background:#1b4143;color:#d7eee5;text-align:center;padding:18px 0;border-radius:12px;font-size:22px}.active{background:#8ee5c2;color:#08251c;font-weight:900;animation:pulse 1.5s infinite}.slots{display:flex;gap:12px;flex-wrap:wrap}.slot{border:1px solid #6a9d8a;color:#b8e9d2;padding:13px 19px;border-radius:14px;font-size:21px}
+          .mail{width:580px;margin:auto;border-radius:26px;background:#f8fbf9;color:#1a302c;padding:35px;box-shadow:0 25px 80px #0008;transform:rotate(1deg)}.mailtop{font-size:20px;color:#60736f;border-bottom:1px solid #dce5e1;padding-bottom:20px}.check{font-size:80px;color:#14845d;text-align:center;margin:24px}.mailtitle{font-size:30px;font-weight:800;text-align:center}.mailbody{font-size:21px;color:#64746f;text-align:center;margin-top:15px}
+          .footer{position:absolute;bottom:75px;left:78px;right:78px;display:flex;justify-content:space-between;color:#8199a2;font-size:20px;letter-spacing:3px}
+          """
+          for i,r in enumerate(reels,1):
+            s=r['slug']
+            dur=float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',f'out/{s}-voice.mp3']).decode().strip())
+            sd=dur/5+0.25
+            scene_data=[
+              (r['hook'],'Le problème au quotidien','Les appels et les demandes arrivent parfois au mauvais moment.','problem'),
+              ('LE PATIENT OUVRE LA PAGE','Un parcours pensé pour le mobile.','Il choisit le service et renseigne les informations nécessaires.','phone'),
+              ('IL CHOISIT UNE DATE','Les disponibilités sont présentées clairement.','Le patient sélectionne un créneau disponible selon les réglages du cabinet.','calendar'),
+              ('CÔTÉ CABINET','Les demandes arrivent dans un tableau de suivi.','Votre équipe retrouve les informations au même endroit.','dashboard'),
+              ('ET ENSUITE ?','Le patient reçoit une confirmation par e-mail.','Une expérience plus claire, du premier clic au suivi de la demande.','mail')
+            ]
+            blocks=[]
+            for j,(ey,head,body,kind) in enumerate(scene_data):
+              if kind=='problem': vis='<div class="visual dash"><div class="dashhead"><span>ACCUEIL DU CABINET</span><span>APPELS ENTRANTS</span></div><div class="row"><span class="dot"></span>Appel pendant une consultation</div><div class="row"><span class="dot"></span>Message à traiter</div><div class="row"><span class="dot"></span>Demande à noter</div></div>'
+              elif kind=='phone': vis='<div class="visual phone"><div class="notch"></div><div style="font-size:20px;color:#698078">CABINET MÉDICAL</div><div style="font-size:32px;font-weight:800;margin:22px 0">Prendre rendez-vous</div><div class="field">Choisir un service</div><div class="field">Date souhaitée</div><div class="field">Vos coordonnées</div><div class="submit">Envoyer ma demande →</div></div>'
+              elif kind=='calendar': vis='<div class="visual calendar"><div class="dashhead"><span>CHOISIR UNE DATE</span><span>JUIN</span></div><div class="days">'+''.join(f'<div class="day {"active" if n==18 else ""}">{n}</div>' for n in range(15,29))+'</div><div class="slots"><span class="slot">09:00</span><span class="slot">09:15</span><span class="slot">10:30</span></div></div>'
+              elif kind=='dashboard': vis='<div class="visual dash"><div class="dashhead"><span>RENDEVO · DEMANDES</span><span>AUJOURD’HUI</span></div><div class="row"><span class="dot"></span>Consultation · Patient 01<span class="pill">Reçue</span></div><div class="row"><span class="dot"></span>Contrôle · Patient 02<span class="pill">Reçue</span></div><div class="row"><span class="dot"></span>Suivi · Patient 03<span class="pill">Reçue</span></div></div>'
+              else: vis='<div class="visual mail"><div class="mailtop">De : RENDEVO · Confirmation</div><div class="check">✓</div><div class="mailtitle">Votre demande est enregistrée</div><div class="mailbody">Les informations de votre rendez-vous ont bien été transmises au cabinet.</div></div>'
+              blocks.append(f'<section class="scene" data-duration="{sd:.3f}" data-camera="push 1.04"><div class="brand">RENDE<b>VO</b></div><div class="count">{i:02d} / 10</div><div class="eyebrow">{ey}</div><h1>{head}</h1><p>{body}</p>{vis}<div class="footer"><span>LE RENDEZ-VOUS, PLUS SIMPLE</span><span>RENDEVO.DZ</span></div></section>')
+            page='<!doctype html><html lang="fr" data-width="1080" data-height="1920" data-fps="30"><head><meta charset="utf-8"><style>'+css+'</style></head><body><main data-sequence data-transition="fade 0.5">'+''.join(blocks)+'</main></body></html>'
+            pathlib.Path('compositions',s+'.html').write_text(page,encoding='utf-8')
+            print('Render',s,round(dur,1),'sec')
+            subprocess.run(['npx','givemotion','render',f'compositions/{s}.html','-o',f'out/{s}-silent.mp4','--quality','standard'],check=True)
+            vf="subtitles=out/"+s+".vtt:force_style='FontName=Arial,FontSize=22,PrimaryColour=&H00FFFFFF,OutlineColour=&H00101818,BorderStyle=1,Outline=3,Shadow=1,Alignment=2,MarginV=145,MarginL=65,MarginR=65'"
+            subprocess.run(['ffmpeg','-y','-i',f'out/{s}-silent.mp4','-i',f'out/{s}-voice.mp3','-vf',vf,'-map','0:v:0','-map','1:a:0','-c:v','libx264','-preset','fast','-crf','20','-c:a','aac','-b:a','192k','-shortest',f'out/{s}.mp4'],check=True)
+            pathlib.Path(f'out/{s}-silent.mp4').unlink()
+            pathlib.Path(f'out/{s}-voice.mp3').unlink()
+            pathlib.Path(f'out/{s}.vtt').unlink()
+          PY
+          python3 /tmp/render.py
+      - name: Verify every MP4
+        run: |
+          python3 - <<'PY'
+          import glob,subprocess,os
+          fs=sorted(glob.glob('out/*.mp4'))
+          assert len(fs)==10, f'Expected 10 videos, found {len(fs)}'
+          for f in fs:
+            d=float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',f]).decode().strip())
+            assert d>=25, f'{f} too short: {d}'
+            print(os.path.basename(f),round(d,1),'seconds',os.path.getsize(f),'bytes')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RENDEVO-10-V3-Female-Animated-Story-Reels
+          path: out/*.mp4
+          if-no-files-found: error
+          retention-days: 7
