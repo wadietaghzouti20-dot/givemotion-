@@ -246,7 +246,7 @@ for idx, reel in enumerate(REELS, 1):
     pathlib.Path("compositions", slug + ".html").write_text(page, encoding="utf-8")
     print(f"Rendering {slug} | voice {duration:.1f}s")
     run(["npx","givemotion","render",f"compositions/{slug}.html","-o",f"out/{slug}-silent.mp4","--quality","standard"])
-    run(["ffmpeg","-y","-i",f"out/{slug}-silent.mp4","-i",f"out/{slug}-voice.mp3","-map","0:v:0","-map","1:a:0","-c:v","libx264","-preset","fast","-crf","19","-c:a","aac","-b:a","192k","-shortest",f"out/{slug}.mp4"])
+    run(["ffmpeg","-y","-i",f"out/{slug}-silent.mp4","-i",f"out/{slug}-voice.mp3","-map","0:v:0","-map","1:a:0","-c:v","libx264","-preset","fast","-crf","19","-c:a","aac","-b:a","192k","-af","apad=pad_dur=1.2","-shortest",f"out/{slug}.mp4"])
     pathlib.Path(f"out/{slug}-silent.mp4").unlink()
     pathlib.Path(f"out/{slug}-voice.mp3").unlink()
     print(f"Finished {slug}")
