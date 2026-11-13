@@ -215,7 +215,7 @@ def visual(kind):
     "link": '<div class="linkcard"><div class="linkicon">↗</div><div style="font-size:24px;font-weight:900">Votre lien de réservation</div><div style="font-size:17px;color:#6e8179;margin-top:15px">À partager sur Instagram, votre site ou par QR code.</div><div class="action">rendevo.dz / cabinet</div></div>',
     "flow": '<div class="flow"><div class="flowstep"><b>1</b>Page personnalisée</div><div class="flowstep"><b>2</b>Choix du service et du créneau</div><div class="flowstep"><b>3</b>Coordonnées du patient</div><div class="flowstep"><b>4</b>Suivi côté cabinet</div></div>',
     "dashboard": '<div class="panel"><div class="paneltop"><span>ESPACE CABINET</span><span>VUE DU JOUR</span></div><div class="item"><span class="dot"></span>Demande reçue <span class="status">À traiter</span></div><div class="item"><span class="dot"></span>Créneau sélectionné <span class="status">Visible</span></div><div class="item"><span class="dot"></span>Coordonnées patient <span class="status">Enregistrées</span></div></div>',
-    "cta": '<div class="ctavisual"><div class="ctalogo">RENDE<b>VO</b></div><div class="ctal ine"></div><div class="ctasmall">RÉSERVATION · SUIVI · ORGANISATION</div></div>'
+    "cta": '<div class="ctavisual"><div class="ctalogo">RENDE<b>VO</b></div><div class="ctaline"></div><div class="ctasmall">RÉSERVATION · SUIVI · ORGANISATION</div></div>'
     }
     return templates.get(kind, templates["phone"])
 
