@@ -30,6 +30,8 @@ jobs:
           npx givemotion install
           npx givemotion doctor
       - name: Render MP4
+        env:
+          GIVEMOTION_NO_SANDBOX: "1"
         run: |
           mkdir -p out
           npx givemotion render "${{ inputs.composition || 'video.html' }}" -o out/video.mp4 --quality standard
