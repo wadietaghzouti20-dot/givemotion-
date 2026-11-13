@@ -1,20 +1,15 @@
-name: Render Givemotion video
+name: Render 10 RENDEVO reels with French voiceover
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-      composition:
-        description: HTML composition to render
-        required: true
-        default: video.html
 permissions:
   contents: read
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,21 +18,167 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          sudo apt-get install -y ffmpeg python3-venv
       - name: Install Givemotion and browser
         run: |
           npm install --no-save givemotion
           npx givemotion install
           npx givemotion doctor
-      - name: Render MP4
+      - name: Install free voiceover tool
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install edge-tts
+      - name: Generate 10 distinct French reels and voiceovers
+        run: |
+          mkdir -p compositions out
+          cat > /tmp/build_reels.py <<'PY'
+          import html, json, pathlib
+          reels = [
+            {
+              "slug":"01-les-appels-interrompent",
+              "angle":"Les appels interrompent les soins",
+              "hook":"UN APPEL. PUIS UN AUTRE.",
+              "title":"Pendant les soins, le téléphone continue de sonner.",
+              "body":"Et chaque interruption prend du temps à votre équipe.",
+              "solution":"RENDEVO permet aux patients d’envoyer leur demande de rendez-vous en ligne.",
+              "voice":"Pendant que vous prenez soin de vos patients, le téléphone continue de sonner. RENDEVO donne à vos patients un moyen simple d’envoyer leur demande de rendez-vous en ligne, pendant que votre équipe garde une organisation plus claire. Écrivez-nous pour découvrir RENDEVO.",
+            },
+            {
+              "slug":"02-les-appels-manques",
+              "angle":"Les appels manqués",
+              "hook":"ET SI CE PATIENT N’APPELAIT QU’UNE FOIS ?",
+              "title":"Un appel manqué peut devenir une occasion perdue.",
+              "body":"Le patient passe à autre chose. Votre équipe doit rappeler.",
+              "solution":"Offrez aussi une réservation accessible depuis le téléphone, à tout moment.",
+              "voice":"Un patient appelle, personne ne peut répondre, et il ne rappelle pas toujours. Avec RENDEVO, il peut envoyer sa demande de rendez-vous en ligne, sans attendre qu’une ligne se libère. Une autre façon de rester accessible. Contactez RENDEVO.",
+            },
+            {
+              "slug":"03-whatsapp-desordonne",
+              "angle":"Les messages dispersés",
+              "hook":"WHATSAPP N’EST PAS UN AGENDA.",
+              "title":"Les demandes arrivent de partout.",
+              "body":"Messages, appels, notes… difficile de tout suivre.",
+              "solution":"RENDEVO centralise les demandes dans un tableau de suivi.",
+              "voice":"Un rendez-vous demandé sur WhatsApp, un autre par téléphone, une information notée à la hâte… ça devient vite difficile à suivre. RENDEVO centralise les demandes dans un tableau clair et ajoute une confirmation par e-mail. Simplifiez l’organisation de votre cabinet.",
+            },
+            {
+              "slug":"04-apres-les-horaires",
+              "angle":"Les demandes après fermeture",
+              "hook":"VOTRE CABINET FERME. LES PATIENTS, EUX, CHERCHENT ENCORE.",
+              "title":"Les demandes ne s’arrêtent pas à l’heure de fermeture.",
+              "body":"Un patient peut vouloir organiser sa visite le soir ou le week-end.",
+              "solution":"Une page de demande en ligne reste consultable depuis son téléphone.",
+              "voice":"À vingt heures, votre secrétariat est fermé, mais un patient cherche déjà un rendez-vous. Avec RENDEVO, il peut consulter votre page et envoyer sa demande en ligne, même en dehors des horaires d’accueil. Rendez votre cabinet plus accessible.",
+            },
+            {
+              "slug":"05-double-reservation",
+              "angle":"Les conflits de créneaux",
+              "hook":"DEUX PATIENTS. LE MÊME CRÉNEAU ?",
+              "title":"Les doubles réservations créent du stress pour tout le monde.",
+              "body":"Vérifier les disponibilités manuellement peut devenir compliqué.",
+              "solution":"RENDEVO vérifie les créneaux déjà pris avant de proposer une disponibilité.",
+              "voice":"Deux patients sur le même créneau : c’est le genre de problème qui désorganise une journée. RENDEVO vérifie les créneaux déjà réservés pour éviter de proposer une disponibilité occupée. Moins de confusion, une gestion plus structurée. Parlons de votre cabinet.",
+            },
+            {
+              "slug":"06-equipe-surchargee",
+              "angle":"La surcharge du secrétariat",
+              "hook":"VOTRE SECRÉTARIAT A DÉJÀ ASSEZ À FAIRE.",
+              "title":"Répondre, vérifier, noter, confirmer… toute la journée.",
+              "body":"Les petites tâches répétées prennent une place énorme.",
+              "solution":"Laissez RENDEVO organiser les demandes et envoyer les confirmations par e-mail.",
+              "voice":"Votre équipe accueille les patients, répond aux appels, vérifie les horaires et note les demandes. Ces tâches répétées prennent du temps. RENDEVO structure le parcours de réservation et envoie les confirmations par e-mail. Donnez plus de clarté à votre organisation.",
+            },
+            {
+              "slug":"07-experience-patient",
+              "angle":"Le parcours du patient",
+              "hook":"PRENDRE RENDEZ-VOUS NE DEVRAIT PAS ÊTRE COMPLIQUÉ.",
+              "title":"Un patient veut une chose : savoir comment réserver.",
+              "body":"Pas chercher le bon numéro. Pas attendre une réponse.",
+              "solution":"Un parcours mobile simple pour choisir un service, une date et un horaire.",
+              "voice":"Pour un patient, prendre rendez-vous devrait être simple. Une page claire, quelques étapes, une demande envoyée depuis son téléphone. C’est l’expérience que RENDEVO aide votre cabinet à proposer. Une organisation plus fluide commence dès le premier clic.",
+            },
+            {
+              "slug":"08-taches-repetitives",
+              "angle":"Les tâches administratives répétitives",
+              "hook":"COMBIEN DE FOIS NOTEZ-VOUS LA MÊME INFORMATION ?",
+              "title":"Les mêmes questions. Les mêmes vérifications. Chaque jour.",
+              "body":"Le temps administratif s’accumule rendez-vous après rendez-vous.",
+              "solution":"Les demandes et informations utiles sont regroupées dans un suivi centralisé.",
+              "voice":"Nom, service, date, horaire, coordonnées… répéter les mêmes étapes pour chaque demande finit par peser. RENDEVO rassemble les informations utiles dans un tableau de suivi et envoie une confirmation au patient. Moins de dispersion, plus de visibilité.",
+            },
+            {
+              "slug":"09-image-professionnelle",
+              "angle":"L’image du cabinet",
+              "hook":"VOTRE PREMIÈRE IMPRESSION COMMENCE EN LIGNE.",
+              "title":"Avant de venir, le patient découvre votre façon de l’accueillir.",
+              "body":"Une réservation confuse ne reflète pas la qualité de vos soins.",
+              "solution":"Une page de réservation adaptée à l’identité de votre cabinet.",
+              "voice":"Votre cabinet soigne son accueil, son espace et son service. Le parcours de réservation mérite la même attention. RENDEVO crée une expérience en ligne personnalisée, cohérente avec l’identité de votre cabinet. Faites bonne impression dès la prise de rendez-vous.",
+            },
+            {
+              "slug":"10-temps-retrouve",
+              "angle":"Retrouver du temps",
+              "hook":"VOTRE TEMPS EST PLUS PRÉCIEUX QUE DES ALLERS-RETOURS.",
+              "title":"Chaque rendez-vous ne devrait pas demander dix échanges.",
+              "body":"Simplifiez la demande, la confirmation et le suivi.",
+              "solution":"RENDEVO : un système de réservation pensé pour les cabinets médicaux.",
+              "voice":"Un patient demande un horaire. Votre équipe vérifie. Il faut répondre, confirmer, puis retrouver l’information. RENDEVO rassemble ces étapes dans un parcours plus organisé, avec demande en ligne, confirmation par e-mail et suivi centralisé. Reprenez le contrôle de votre temps.",
+            }
+          ]
+          base_css = """
+          *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131d;color:#f4f8f7;font-family:Arial,sans-serif}
+          .scene{width:1080px;height:1920px;padding:112px 82px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 82% 16%,#17483f 0%,transparent 43%),linear-gradient(145deg,#06121b,#102431 58%,#07131d)}
+          .top{font-size:34px;font-weight:800;letter-spacing:9px;margin-bottom:105px}.mint{color:#8ee5c2}.tag{font-size:25px;letter-spacing:5px;text-transform:uppercase;color:#8ee5c2;font-weight:bold}
+          h1{font-size:94px;line-height:1.05;letter-spacing:-4px;margin:36px 0 35px;font-weight:800}p{font-size:38px;line-height:1.4;color:#b9cbd0;margin:0}
+          .line{height:3px;width:150px;background:#8ee5c2;margin:50px 0}.cta{display:inline-block;background:#8ee5c2;color:#071c17;padding:27px 34px;border-radius:18px;font-size:30px;font-weight:bold;margin-top:48px;width:max-content}
+          .footer{position:absolute;bottom:80px;left:82px;right:82px;display:flex;justify-content:space-between;color:#8199a2;font-size:21px;letter-spacing:3px}
+          .num{position:absolute;right:82px;top:80px;color:#8ee5c2;font-size:24px;letter-spacing:4px}
+          """
+          for i,r in enumerate(reels,1):
+            scenes = [
+              (r["hook"],r["title"],r["body"],"LE PROBLÈME"),
+              ("LE QUOTIDIEN DU CABINET",r["body"],r["title"],"POUR VOTRE ÉQUIPE"),
+              ("UNE ORGANISATION PLUS SIMPLE",r["solution"],"Un parcours clair, adapté à votre cabinet.","LA SOLUTION")
+            ]
+            sections=[]
+            for j,(ey,head,body,label) in enumerate(scenes,1):
+              sections.append(f'''<section class="scene" data-duration="6.5" data-camera="push 1.055">
+                <div class="top">RENDE<span class="mint">VO</span></div><div class="num">0{i} / 10</div>
+                <div class="tag" data-enter="fade-up">{html.escape(ey)}</div>
+                <h1 data-enter="rise">{html.escape(head)}</h1><div class="line"></div>
+                <p data-enter="fade-up">{html.escape(body)}</p>
+                {('<div class="cta" data-enter="fade-up">ÉCRIVEZ À RENDEVO</div>' if j==3 else '')}
+                <div class="footer"><span>{html.escape(label)}</span><span>RENDEVO</span></div>
+              </section>''')
+            page=f'''<!doctype html><html lang="fr" data-width="1080" data-height="1920" data-fps="30"><head><meta charset="utf-8"><title>RENDEVO Reel {i:02d}</title><style>{base_css}</style></head><body><main data-sequence data-transition="fade 0.35">{''.join(sections)}</main></body></html>'''
+            pathlib.Path("compositions",r["slug"]+".html").write_text(page,encoding="utf-8")
+            pathlib.Path("compositions",r["slug"]+".txt").write_text(r["voice"],encoding="utf-8")
+          pathlib.Path("/tmp/reels.json").write_text(json.dumps(reels,ensure_ascii=False),encoding="utf-8")
+          print("Prepared",len(reels),"original reel scripts.")
+          PY
+          python3 /tmp/build_reels.py
+      - name: Render, generate French narration, and combine
         env:
           GIVEMOTION_NO_SANDBOX: "1"
         run: |
-          mkdir -p out
-          npx givemotion render "${{ inputs.composition || 'video.html' }}" -o out/video.mp4 --quality standard
+          set -e
+          python3 - <<'PY'
+          import json
+          reels=json.load(open('/tmp/reels.json',encoding='utf-8'))
+          with open('/tmp/render_list.txt','w',encoding='utf-8') as f:
+            for r in reels: f.write(r['slug']+'\n')
+          PY
+          while IFS= read -r slug; do
+            echo "Rendering $slug"
+            .venv/bin/edge-tts --voice fr-FR-HenriNeural --rate=-4% --file "compositions/$slug.txt" --write-media "out/$slug-voice.mp3"
+            npx givemotion render "compositions/$slug.html" -o "out/$slug-silent.mp4" --quality standard
+            ffmpeg -y -i "out/$slug-silent.mp4" -i "out/$slug-voice.mp3" -map 0:v:0 -map 1:a:0 -c:v copy -af apad -c:a aac -b:a 192k -shortest "out/$slug.mp4"
+            rm "out/$slug-silent.mp4" "out/$slug-voice.mp3"
+          done < /tmp/render_list.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: givemotion-mp4
-          path: out/video.mp4
+          name: RENDEVO-10-Voiceover-Reels
+          path: out/*.mp4
           if-no-files-found: error
           retention-days: 7
