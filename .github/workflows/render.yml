@@ -1,5 +1,8 @@
 name: Render Givemotion video
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       composition:
@@ -25,7 +28,7 @@ jobs:
       - name: Render MP4
         run: |
           mkdir -p out
-          npx givemotion render "${{ inputs.composition }}" -o out/video.mp4 --quality standard
+          npx givemotion render "${{ inputs.composition || 'video.html' }}" -o out/video.mp4 --quality standard
       - uses: actions/upload-artifact@v4
         with:
           name: givemotion-mp4
