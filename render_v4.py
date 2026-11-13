@@ -230,7 +230,7 @@ for idx, reel in enumerate(REELS, 1):
     text_path.write_text(reel["voice"], encoding="utf-8")
     run([".venv/bin/edge-tts","--voice","fr-FR-VivienneMultilingualNeural","--rate=-2%","--file",str(text_path),"--write-media",f"out/{slug}-voice.mp3"])
     duration = float(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration","-of","default=noprint_wrappers=1:nokey=1",f"out/{slug}-voice.mp3"]).decode().strip())
-    scene_duration = max(5.0, duration / len(reel["scenes"]) + 0.35)
+    scene_duration = max(5.5, duration / len(reel["scenes"]) + 1.25)  # leave enough video tail for narration and padding
     blocks = []
     for j, (kicker, title, detail, kind) in enumerate(reel["scenes"]):
         blocks.append(
