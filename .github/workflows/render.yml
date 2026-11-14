@@ -108,7 +108,7 @@ jobs:
               return f'''<div class="visual phonewrap" data-enter="zoom"><div class="phone"><div class="island"></div><div class="phead"><b>RENDEVO</b><span>•••</span></div>
               <div class="ptitle">{'Prendre rendez-vous' if fr else 'Book an appointment'}</div><div class="pcap">{'EXEMPLE DE PARCOURS' if fr else 'ILLUSTRATIVE FLOW'}</div>
               <div class="flabel">{'Choisir un service' if fr else 'Choose a service'}</div><div class="field"><b>Consultation</b><span>⌄</span></div>
-              <div class="flabel">{'Choisir une date' if fr else 'Choose a date'}</div><div class="date"><b>{'14 NOV · JEUDI' if fr else 'NOV 14 · THURSDAY'}</b></div>
+              <div class="flabel">{'Choisir une date' if fr else 'Choose a date'}</div><div class="date"><b>{'18 NOV · MERCREDI' if fr else 'NOV 18 · WEDNESDAY'}</b></div>
               <div class="flabel">{'Horaire' if fr else 'Time'}</div><div class="field selected"><b>{'10:30 · Disponible' if fr else '10:30 AM · Available'}</b><span>✓</span></div>
               <div class="send">{'Envoyer la demande' if fr else 'Send request'}　→</div></div></div>'''
             if kind in ("calendar","calendar_en"):
@@ -119,9 +119,9 @@ jobs:
             if kind in ("sheet","sheet_en"):
               return f'''<div class="visual workspace" data-enter="zoom"><div class="window"><div class="wtop"><i></i><i></i><i></i><b>{'SUIVI DES RENDEZ-VOUS' if fr else 'APPOINTMENT OVERVIEW'}</b></div>
               <div class="cols"><span>SERVICE</span><span>DATE</span><span>{'STATUT' if fr else 'STATUS'}</span></div>
-              <div class="r"><b>Consultation</b><span>14 NOV</span><em>{'Reçu' if fr else 'Received'}</em></div>
-              <div class="r"><b>{'Contrôle' if fr else 'Follow-up'}</b><span>15 NOV</span><em>{'Confirmé' if fr else 'Confirmed'}</em></div>
-              <div class="r"><b>{'Nouvelle demande' if fr else 'New request'}</b><span>16 NOV</span><em>{'À traiter' if fr else 'To review'}</em></div></div>
+              <div class="r"><b>Consultation</b><span>18 NOV</span><em>{'Reçu' if fr else 'Received'}</em></div>
+              <div class="r"><b>{'Contrôle' if fr else 'Follow-up'}</b><span>19 NOV</span><em>{'Confirmé' if fr else 'Confirmed'}</em></div>
+              <div class="r"><b>{'Nouvelle demande' if fr else 'New request'}</b><span>20 NOV</span><em>{'À traiter' if fr else 'To review'}</em></div></div>
               <div class="mail"><div class="mailicon">✉</div><div><b>{'Confirmation par e-mail' if fr else 'Email confirmation'}</b><small>{'Votre demande a bien été reçue.' if fr else 'Your request has been received.'}</small></div><span>✓</span></div></div>'''
             return f'''<div class="visual cta" data-enter="zoom"><div class="orb"><span>R</span></div><div class="brand">RENDEVO</div><div class="subbrand">BOOKING SYSTEMS</div>
               <div class="pill">{'ÉCRIVEZ « RENDEVO » EN DM' if fr else 'DM “BOOKING” TO TALK'}　↗</div><div class="tiny">{'Demande en ligne · Suivi · E-mail' if fr else 'Online request · Admin view · Email'}</div></div>'''
