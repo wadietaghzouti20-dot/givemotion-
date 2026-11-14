@@ -42,17 +42,17 @@ jobs:
             return "\n".join(textwrap.wrap(s,w,break_long_words=False,break_on_hyphens=False))
           data={
            "fr":{"voice":"fr-FR-DeniseNeural","caption":"Les demandes arrivent sur plusieurs canaux ? Un parcours de réservation clair peut aider votre équipe à mieux les suivre. Avec RENDEVO, vos patients peuvent envoyer leur demande en ligne et votre équipe retrouve les informations dans un tableau de suivi. Parlons de votre cabinet en DM.","tags":"#RENDEVO #Oran #Algerie #ReservationEnLigne #CabinetMedical #EntrepriseAlgerienne","scenes":[
-            ("LE QUOTIDIEN, EN VRAI","WhatsApp n’est pas un agenda.","Appels, messages et notes : les demandes se dispersent.","WhatsApp n’est pas un agenda. Entre les appels, les messages et les notes, les demandes peuvent vite se disperser. Votre équipe doit ensuite retrouver la bonne information.","messages"),
-            ("CÔTÉ PATIENT","Une page. Une demande.","Un parcours mobile pour choisir un service et envoyer ses informations.","Avec RENDEVO, le patient ouvre une page de réservation adaptée au téléphone. Il choisit le service et envoie sa demande en quelques étapes claires.","booking"),
-            ("IL CHOISIT SON CRÉNEAU","Dates et horaires disponibles.","Le patient consulte les disponibilités avant d’envoyer sa demande.","Il consulte les dates et les horaires disponibles avant d’envoyer sa demande. Le parcours reste clair, même depuis son mobile.","calendar"),
-            ("CÔTÉ ÉQUIPE","Les demandes, au même endroit.","Un tableau de suivi et des confirmations par e-mail selon la configuration.","Côté cabinet, les informations reçues sont regroupées dans un tableau de suivi. Une confirmation par e-mail peut aussi être envoyée selon la configuration.","sheet"),
-            ("RENDEVO","Moins de messages éparpillés.","Des systèmes de réservation adaptés aux activités sur rendez-vous.","RENDEVO crée des systèmes de réservation adaptés aux activités sur rendez-vous. Vous gérez un cabinet en Algérie ? Écrivez RENDEVO en message privé.","cta")]},
+            ("LE QUOTIDIEN, EN VRAI","WhatsApp n’est pas un agenda.","Appels, messages et notes : les demandes se dispersent.","WhatsApp n’est pas un agenda. Appels, messages et notes dispersent les demandes. L’équipe doit ensuite tout retrouver.","messages"),
+            ("CÔTÉ PATIENT","Une page. Une demande.","Un parcours mobile pour choisir un service et envoyer ses informations.","Avec RENDEVO, le patient ouvre une page mobile, choisit son service et envoie sa demande.","booking"),
+            ("IL CHOISIT SON CRÉNEAU","Dates et horaires disponibles.","Le patient consulte les disponibilités avant d’envoyer sa demande.","Il consulte les dates et horaires disponibles avant d’envoyer ses coordonnées.","calendar"),
+            ("CÔTÉ ÉQUIPE","Les demandes, au même endroit.","Un tableau de suivi et des confirmations par e-mail selon la configuration.","Votre équipe retrouve les demandes dans un tableau de suivi. Une confirmation e-mail peut être envoyée selon la configuration.","sheet"),
+            ("RENDEVO","Moins de messages éparpillés.","Des systèmes de réservation adaptés aux activités sur rendez-vous.","RENDEVO crée des systèmes adaptés aux rendez-vous. Cabinet en Algérie ? Écrivez-nous RENDEVO en DM.","cta")]},
            "en":{"voice":"en-US-JennyNeural","caption":"A customer shouldn’t have to wait for opening hours just to send a booking request. RENDEVO builds booking systems for appointment-based businesses, with a clear online request journey and an organized admin view. DM “BOOKING” to discuss your workflow.","tags":"#RENDEVO #OnlineBooking #SmallBusiness #AppointmentBooking #BusinessSystems #CustomerExperience","scenes":[
-            ("AFTER HOURS","10:47 PM. Someone wants to book.","Your business is closed. Their need hasn’t disappeared.","It’s 10:47 PM. A customer wants to book, but your business is closed. They shouldn’t have to wait until morning just to send a request.","night"),
-            ("A BETTER FIRST STEP","Let them send a request online.","A mobile-friendly booking page, built around your business.","With RENDEVO, customers can open a mobile-friendly booking page, choose a service and send their appointment request in a few clear steps.","booking_en"),
-            ("THEY CHOOSE A TIME","Dates and times, clearly shown.","Customers can review availability before sending their details.","They can check available dates and times before submitting their details. A clearer first step, even after business hours.","calendar_en"),
-            ("YOUR TEAM STAYS IN CONTROL","A clearer way to manage requests.","A central admin view, with email confirmations as configured.","Your team can review incoming requests in a central admin view. Email confirmations can also be sent, depending on the setup.","sheet_en"),
-            ("RENDEVO","Make booking easier.","Booking systems for appointment-based businesses. DM “BOOKING”.","RENDEVO builds booking systems for appointment-based businesses. You keep your opening hours and your team stays in control. Want to make booking easier? DM us BOOKING.","cta_en")]}
+            ("AFTER HOURS","10:47 PM. Someone wants to book.","Your business is closed. Their need hasn’t disappeared.","It’s 10:47 PM. A customer wants to book, but your business is closed. They can still send a request.","night"),
+            ("A BETTER FIRST STEP","Let them send a request online.","A mobile-friendly booking page, built around your business.","With RENDEVO, customers open a mobile-friendly page, choose a service and send their request.","booking_en"),
+            ("THEY CHOOSE A TIME","Dates and times, clearly shown.","Customers can review availability before sending their details.","They can review available dates and times before submitting their details.","calendar_en"),
+            ("YOUR TEAM STAYS IN CONTROL","A clearer way to manage requests.","A central admin view, with email confirmations as configured.","Your team reviews requests in one admin view. Email confirmations can be sent when configured.","sheet_en"),
+            ("RENDEVO","Make booking easier.","Booking systems for appointment-based businesses. DM “BOOKING”.","RENDEVO builds booking systems for appointment-based businesses. Want a simpler booking journey? DM BOOKING.","cta_en")]}
           }
           css="""
           *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131c;color:#f5f8f8;font-family:Arial,Helvetica,sans-serif}
@@ -167,7 +167,7 @@ jobs:
           ## Finished Reel 1 — French / Algeria
           **Hook:** WhatsApp n’est pas un agenda.
           **Audience:** Algerian clinics and appointment-based businesses.
-          **Format:** 9:16, 1080×1920, French female neural voice, burned-in subtitles, original ambient music.
+          **Format:** 9:16, 1080×1920, 30–40s, French female neural voice, burned-in subtitles, original ambient music.
           **Caption:** Les demandes arrivent sur plusieurs canaux ? Un parcours de réservation clair peut aider votre équipe à mieux les suivre. RENDEVO crée des systèmes adaptés aux activités sur rendez-vous. Écrivez « RENDEVO » en DM pour en parler.
           **Hashtags:** #RENDEVO #Oran #Algerie #ReservationEnLigne #CabinetMedical #EntrepriseAlgerienne
           **CTA:** Écrivez « RENDEVO » en DM.
@@ -175,7 +175,7 @@ jobs:
           ## Finished Reel 2 — English / International
           **Hook:** 10:47 PM. Someone wants to book.
           **Audience:** International appointment-based businesses.
-          **Format:** 9:16, 1080×1920, English female neural voice, burned-in subtitles, original ambient music.
+          **Format:** 9:16, 1080×1920, 30–40s, English female neural voice, burned-in subtitles, original ambient music.
           **Caption:** A customer shouldn’t have to wait for opening hours just to send a booking request. RENDEVO builds booking systems around appointment-based businesses. DM “BOOKING” to discuss your workflow.
           **Hashtags:** #RENDEVO #OnlineBooking #SmallBusiness #AppointmentBooking #BusinessSystems
           **CTA:** DM “BOOKING” to talk.
@@ -234,7 +234,7 @@ jobs:
             v=next(s for s in d["streams"] if s.get("codec_type")=="video")
             sec=float(d["format"]["duration"])
             assert v["codec_name"]=="h264" and v["width"]==1080 and v["height"]==1920
-            assert 15 <= sec <= 30, (lang,sec)
+            assert 25 <= sec <= 45, (lang,sec)
             print(f"VERIFIED {lang}: H.264 1080x1920, {sec:.2f}s")
           PY
       - uses: actions/upload-artifact@v4
