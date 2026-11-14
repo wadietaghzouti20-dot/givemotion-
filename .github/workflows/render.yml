@@ -106,7 +106,7 @@ jobs:
               <div class="flabel">{'Choisir une date' if fr else 'Choose a date'}</div><div class="date"><b>{'14 NOV · JEUDI' if fr else 'NOV 14 · THURSDAY'}</b></div>
               <div class="flabel">{'Horaire' if fr else 'Time'}</div><div class="field selected"><b>{'10:30 · Disponible' if fr else '10:30 AM · Available'}</b><span>✓</span></div>
               <div class="send">{'Envoyer la demande' if fr else 'Send request'}　→</div></div></div>'''
-                        if kind in ("calendar","calendar_en"):
+            if kind in ("calendar","calendar_en"):
               return f'''<div class="visual" data-enter="zoom"><div class="calendar"><div class="calhead"><b>{'CHOISIR UNE DATE' if fr else 'CHOOSE A DATE'}</b><span>{'NOVEMBRE' if fr else 'NOVEMBER'}</span></div><div class="days">
               <div class="day">16</div><div class="day">17</div><div class="day active">18</div><div class="day">19</div><div class="day busy">20</div><div class="day">21</div><div class="day">22</div>
               <div class="day">23</div><div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div><div class="day">29</div></div>
