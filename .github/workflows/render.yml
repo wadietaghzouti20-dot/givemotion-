@@ -38,6 +38,10 @@ jobs:
           def stamp(t):
             ms=round(t*1000); h,ms=divmod(ms,3600000); m,ms=divmod(ms,60000); s,ms=divmod(ms,1000)
             return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+          def ass_stamp(t):
+            cs=round(t*100)
+            h,cs=divmod(cs,360000); m,cs=divmod(cs,6000); s,cs=divmod(cs,100)
+            return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
           def wrap(s,w):
             return "\n".join(textwrap.wrap(s,w,break_long_words=False,break_on_hyphens=False))
           data={
@@ -161,6 +165,13 @@ jobs:
               cues.append(f"{i}\n{stamp(cursor)} --> {stamp(cursor+sp)}\n{wrap(scene[3],34 if lang=='fr' else 38)}\n")
               cursor+=pad
             (OUT/f"{lang}.srt").write_text("\n".join(cues),encoding="utf-8")
+            ass_lines=["[Script Info]","ScriptType: v4.00+","PlayResX: 1080","PlayResY: 1920","WrapStyle: 2","ScaledBorderAndShadow: yes","","[V4+ Styles]","Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding","Style: Default,DejaVu Sans,32,&H00FFFFFF,&H000000FF,&H90000000,&H64000000,0,0,0,0,100,100,0,0,1,3,0,2,72,72,235,1","","[Events]","Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
+            cursor=0
+            for scene,sp,pad in zip(d["scenes"],speech,padded):
+              subtitle=wrap(scene[3],34 if lang=="fr" else 38).replace("\n",r"\N")
+              ass_lines.append(f"Dialogue: 0,{ass_stamp(cursor)},{ass_stamp(cursor+sp)},Default,,0,0,0,,{subtitle}")
+              cursor+=pad
+            (OUT/f"{lang}.ass").write_text("\n".join(ass_lines),encoding="utf-8")
             (OUT/f"{lang}-caption.txt").write_text(d["caption"]+"\n\n"+d["tags"]+"\n\nVOICEOVER:\n"+"\n".join(x[3] for x in d["scenes"]),encoding="utf-8")
             print(f"Prepared {lang}: {total:.2f}s, female neural voice.")
           plan="""# RENDEVO content package — 14 November 2026
@@ -221,7 +232,7 @@ jobs:
             up=$(printf '%s' "$lang" | tr '[:lower:]' '[:upper:]')
             npx givemotion render "compositions/daily-$lang.html" -o "out/$lang-silent.mp4" --quality standard
             ffmpeg -y -i "out/$lang-silent.mp4" -i "out/$lang-voice.wav" -i "out/$lang-music.wav" \
-              -filter_complex "[0:v]subtitles=out/$lang.srt:original_size=1080x1920:force_style='FontName=DejaVu Sans,FontSize=32,PrimaryColour=&H00FFFFFF,OutlineColour=&H90000000,BorderStyle=1,Outline=3,Shadow=0,Alignment=2,MarginV=235,MarginL=72,MarginR=72'[vout];[1:a]volume=1.0[v];[2:a]volume=0.22[m];[v][m]amix=inputs=2:duration=first:dropout_transition=1[a]" \
+              -filter_complex "[0:v]ass=out/$lang.ass;[1:a]volume=1.0[v];[2:a]volume=0.22[m];[v][m]amix=inputs=2:duration=first:dropout_transition=1[a]" \
               -map "[vout]" -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -shortest -movflags +faststart "out/RENDEVO_"$up"_2026-11-14.mp4"
             ffmpeg -y -ss 0.8 -i "out/RENDEVO_"$up"_2026-11-14.mp4" -frames:v 1 -q:v 2 "out/RENDEVO_"$up"_cover.jpg"
             ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate -show_entries format=duration -of json "out/RENDEVO_"$up"_2026-11-14.mp4" > "out/"$lang"-verification.json"
@@ -245,6 +256,7 @@ jobs:
             out/RENDEVO_*_cover.jpg
             out/*-caption.txt
             out/*.srt
+            out/*.ass
             out/CONTENT_PLAN.md
             out/*-verification.json
           if-no-files-found: error
