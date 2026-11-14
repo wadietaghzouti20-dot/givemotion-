@@ -1,0 +1,38 @@
+name: Render dream documentary
+on:
+  push:
+    branches: [main]
+    paths:
+      - "dream_documentary.py"
+      - ".github/workflows/render-dream-documentary.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install rendering dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          pip install pillow numpy
+      - name: Render ten-minute documentary
+        run: python dream_documentary.py
+      - name: Verify video
+        run: |
+          ffprobe -v error -show_entries format=duration -show_entries stream=codec_name,width,height -of json dream-documentary.mp4
+          test -s dream-documentary.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pourquoi-revons-nous-documentary
+          path: |
+            dream-documentary.mp4
+            ambience.wav
+          retention-days: 7
