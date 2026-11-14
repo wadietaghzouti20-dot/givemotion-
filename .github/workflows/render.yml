@@ -232,7 +232,7 @@ jobs:
             up=$(printf '%s' "$lang" | tr '[:lower:]' '[:upper:]')
             npx givemotion render "compositions/daily-$lang.html" -o "out/$lang-silent.mp4" --quality standard
             ffmpeg -y -i "out/$lang-silent.mp4" -i "out/$lang-voice.wav" -i "out/$lang-music.wav" \
-              -filter_complex "[0:v]ass=out/$lang.ass;[1:a]volume=1.0[v];[2:a]volume=0.22[m];[v][m]amix=inputs=2:duration=first:dropout_transition=1[a]" \
+              -filter_complex "[0:v]ass=out/$lang.ass[vout];[1:a]volume=1.0[v];[2:a]volume=0.22[m];[v][m]amix=inputs=2:duration=first:dropout_transition=1[a]" \
               -map "[vout]" -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -shortest -movflags +faststart "out/RENDEVO_"$up"_2026-11-14.mp4"
             ffmpeg -y -ss 0.8 -i "out/RENDEVO_"$up"_2026-11-14.mp4" -frames:v 1 -q:v 2 "out/RENDEVO_"$up"_cover.jpg"
             ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate -show_entries format=duration -of json "out/RENDEVO_"$up"_2026-11-14.mp4" > "out/"$lang"-verification.json"
