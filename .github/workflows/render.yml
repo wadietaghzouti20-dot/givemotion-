@@ -41,25 +41,27 @@ jobs:
           def wrap(s,w):
             return "\n".join(textwrap.wrap(s,w,break_long_words=False,break_on_hyphens=False))
           data={
-           "fr":{"voice":"fr-FR-EloiseNeural","caption":"Les demandes arrivent sur plusieurs canaux ? Un parcours de réservation clair peut aider votre équipe à mieux les suivre. RENDEVO crée des systèmes adaptés aux activités sur rendez-vous. Écrivez « RENDEVO » en DM pour en parler.","tags":"#RENDEVO #Oran #Algerie #ReservationEnLigne #CabinetMedical #EntrepriseAlgerienne","scenes":[
-            ("LE QUOTIDIEN, EN VRAI","WhatsApp n’est pas un agenda.","Appels, messages, notes : les demandes se dispersent.","Vous gérez encore les rendez-vous entre WhatsApp, les appels et les notes ?","messages"),
-            ("UN PARCOURS PLUS CLAIR","Une page. Une demande.","Le client choisit un service, une date et un horaire.","Une demande arrive, puis une autre… et retrouver la bonne information devient compliqué.","booking"),
-            ("CÔTÉ ÉQUIPE","Les demandes, au même endroit.","Un suivi centralisé et une confirmation par e-mail.","Avec RENDEVO, le client envoie sa demande en ligne, et l’équipe suit les rendez-vous dans un tableau clair.","sheet"),
-            ("RENDEVO","Moins de messages éparpillés.","Plus de visibilité sur les rendez-vous. Écrivez-nous en DM.","Moins de messages éparpillés. Plus de visibilité. Écrivez RENDEVO en DM.","cta")]},
-           "en":{"voice":"en-US-JennyNeural","caption":"A customer shouldn’t have to wait for opening hours just to send a booking request. RENDEVO builds booking systems around appointment-based businesses. DM “BOOKING” to discuss your workflow.","tags":"#RENDEVO #OnlineBooking #SmallBusiness #AppointmentBooking #BusinessSystems","scenes":[
-            ("AFTER HOURS","10:47 PM. Someone wants to book.","Your inbox is quiet. Their need isn’t.","It’s 10 p.m. A customer wants to book. Your inbox is closed.","night"),
-            ("A BETTER FIRST STEP","Let them send a request online.","Service. Date. Time. A simple booking journey.","They shouldn’t have to wait until morning just to send a request.","booking_en"),
-            ("BUILT AROUND YOUR WORKFLOW","A clearer way to manage requests.","Online requests, email confirmation and a central admin view.","A booking page lets them choose a service, a date and a time, then send their request.","sheet_en"),
-            ("RENDEVO","Make booking easier.","Booking systems for appointment-based businesses. DM “BOOKING”.","RENDEVO builds booking systems around your business. DM us BOOKING to talk.","cta_en")]}
+           "fr":{"voice":"fr-FR-DeniseNeural","caption":"Les demandes arrivent sur plusieurs canaux ? Un parcours de réservation clair peut aider votre équipe à mieux les suivre. Avec RENDEVO, vos patients peuvent envoyer leur demande en ligne et votre équipe retrouve les informations dans un tableau de suivi. Parlons de votre cabinet en DM.","tags":"#RENDEVO #Oran #Algerie #ReservationEnLigne #CabinetMedical #EntrepriseAlgerienne","scenes":[
+            ("LE QUOTIDIEN, EN VRAI","WhatsApp n’est pas un agenda.","Appels, messages et notes : les demandes se dispersent.","WhatsApp n’est pas un agenda. Entre les appels, les messages et les notes, les demandes peuvent vite se disperser. Votre équipe doit ensuite retrouver la bonne information.","messages"),
+            ("CÔTÉ PATIENT","Une page. Une demande.","Un parcours mobile pour choisir un service et envoyer ses informations.","Avec RENDEVO, le patient ouvre une page de réservation adaptée au téléphone. Il choisit le service et envoie sa demande en quelques étapes claires.","booking"),
+            ("IL CHOISIT SON CRÉNEAU","Dates et horaires disponibles.","Le patient consulte les disponibilités avant d’envoyer sa demande.","Il consulte les dates et les horaires disponibles avant d’envoyer sa demande. Le parcours reste clair, même depuis son mobile.","calendar"),
+            ("CÔTÉ ÉQUIPE","Les demandes, au même endroit.","Un tableau de suivi et des confirmations par e-mail selon la configuration.","Côté cabinet, les informations reçues sont regroupées dans un tableau de suivi. Une confirmation par e-mail peut aussi être envoyée selon la configuration.","sheet"),
+            ("RENDEVO","Moins de messages éparpillés.","Des systèmes de réservation adaptés aux activités sur rendez-vous.","RENDEVO crée des systèmes de réservation adaptés aux activités sur rendez-vous. Vous gérez un cabinet en Algérie ? Écrivez RENDEVO en message privé.","cta")]},
+           "en":{"voice":"en-US-JennyNeural","caption":"A customer shouldn’t have to wait for opening hours just to send a booking request. RENDEVO builds booking systems for appointment-based businesses, with a clear online request journey and an organized admin view. DM “BOOKING” to discuss your workflow.","tags":"#RENDEVO #OnlineBooking #SmallBusiness #AppointmentBooking #BusinessSystems #CustomerExperience","scenes":[
+            ("AFTER HOURS","10:47 PM. Someone wants to book.","Your business is closed. Their need hasn’t disappeared.","It’s 10:47 PM. A customer wants to book, but your business is closed. They shouldn’t have to wait until morning just to send a request.","night"),
+            ("A BETTER FIRST STEP","Let them send a request online.","A mobile-friendly booking page, built around your business.","With RENDEVO, customers can open a mobile-friendly booking page, choose a service and send their appointment request in a few clear steps.","booking_en"),
+            ("THEY CHOOSE A TIME","Dates and times, clearly shown.","Customers can review availability before sending their details.","They can check available dates and times before submitting their details. A clearer first step, even after business hours.","calendar_en"),
+            ("YOUR TEAM STAYS IN CONTROL","A clearer way to manage requests.","A central admin view, with email confirmations as configured.","Your team can review incoming requests in a central admin view. Email confirmations can also be sent, depending on the setup.","sheet_en"),
+            ("RENDEVO","Make booking easier.","Booking systems for appointment-based businesses. DM “BOOKING”.","RENDEVO builds booking systems for appointment-based businesses. You keep your opening hours and your team stays in control. Want to make booking easier? DM us BOOKING.","cta_en")]}
           }
           css="""
           *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131c;color:#f5f8f8;font-family:Arial,Helvetica,sans-serif}
           .scene{width:1080px;height:1920px;position:relative;overflow:hidden;padding:86px 78px;background:radial-gradient(ellipse at 82% 28%,rgba(26,112,101,.26),transparent 40%),linear-gradient(145deg,#07131c,#102632 55%,#08141e)}
           .scene:before{content:"";position:absolute;width:760px;height:760px;border:1px solid rgba(137,226,195,.12);border-radius:50%;right:-390px;top:430px}
           .top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:4}.logo{font-size:31px;letter-spacing:7px;font-weight:800}.logo span{color:#8de2c1}.topnote{font-size:16px;letter-spacing:3px;color:#77929c}
-          .content{position:absolute;left:78px;right:58px;top:390px;bottom:290px;display:grid;grid-template-columns:43% 57%;align-items:center;gap:12px;z-index:2}
-          .copy{padding-right:8px;z-index:3}.eyebrow{font-size:19px;letter-spacing:4px;color:#8de2c1;font-weight:700;margin-bottom:35px}
-          h1{font-size:65px;line-height:1.06;letter-spacing:-2.4px;margin:0 0 28px;max-width:470px}.body{font-size:27px;line-height:1.42;color:#b6c8cc;max-width:420px}
+          .content{position:absolute;left:78px;right:58px;top:390px;bottom:290px;display:grid;grid-template-columns:38% 62%;align-items:center;gap:12px;z-index:2}
+          .copy{padding-right:8px;z-index:3}.eyebrow{font-size:16px;letter-spacing:3px;color:#8de2c1;font-weight:700;margin-bottom:25px}
+          h1{font-size:56px;line-height:1.08;letter-spacing:-1.8px;margin:0 0 22px;max-width:360px}.body{font-size:22px;line-height:1.45;color:#b6c8cc;max-width:360px}
           .visual{position:relative;z-index:2;min-width:0}.footer{position:absolute;left:78px;right:78px;bottom:82px;display:flex;justify-content:space-between;color:#76909a;font-size:17px;letter-spacing:3px;z-index:4}.footer b{color:#8de2c1}
           .stack{height:820px;padding:80px 10px 30px 25px}.vlabel{font-size:15px;letter-spacing:3px;color:#8de2c1;margin:0 0 28px 22px}
           .notice{display:flex;align-items:center;gap:18px;background:rgba(21,43,55,.96);border:1px solid rgba(143,181,186,.25);border-radius:22px;padding:25px 22px;margin:0 0 22px;min-height:125px;box-shadow:0 22px 55px rgba(0,0,0,.22)}
@@ -71,6 +73,14 @@ jobs:
           .flabel{font-size:15px;color:#627b83;margin:34px 0 12px}.field{height:72px;border:1px solid #d7e1e2;border-radius:15px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;font-size:18px;background:white}
           .date{height:66px;border-radius:15px;background:#eaf3f1;color:#1a6e62;display:flex;align-items:center;padding:0 18px;font-size:16px}.selected{border:2px solid #53a998;background:#f2faf8}
           .send{margin-top:38px;height:72px;border-radius:16px;background:#176d63;color:white;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+          .calendar{width:100%;max-width:570px;background:#f5f8f7;color:#203a34;border-radius:25px;padding:27px;box-shadow:0 28px 75px rgba(0,0,0,.32);transform:rotate(-1deg)}
+          .calhead{display:flex;justify-content:space-between;align-items:center;font-size:18px;letter-spacing:2px;margin-bottom:24px;color:#31594f}
+          .days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+          .day{padding:16px 0;text-align:center;border-radius:10px;background:#e8efeb;color:#5e746b;font-size:17px}
+          .day.active{background:#176d63;color:#fff;font-weight:800;box-shadow:0 0 0 5px #176d6322}
+          .day.busy{background:#f2dfdc;color:#b66d61;text-decoration:line-through}
+          .slots{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}
+          .slot{padding:12px 14px;border:1px solid #a4c5b6;border-radius:11px;color:#176d63;font-size:15px;background:#fff}
           .workspace{padding:90px 0 0}.window{border-radius:24px;background:#f4f7f7;color:#203941;overflow:hidden;box-shadow:0 30px 75px rgba(0,0,0,.3);transform:rotate(1.5deg)}
           .wtop{height:70px;background:#e8eeee;display:flex;align-items:center;gap:9px;padding:0 22px;font-size:14px;color:#60767d;letter-spacing:1px}.wtop i{width:11px;height:11px;border-radius:50%;background:#9eb2b3}
           .cols,.r{display:grid;grid-template-columns:1.3fr .8fr .8fr;gap:6px;align-items:center;padding:22px 20px}.cols{font-size:12px;letter-spacing:2px;color:#789096}.r{border-top:1px solid #e1e9e9;font-size:14px}.r b{font-size:15px}.r em{font-size:12px;font-style:normal;color:#187566;background:#e2f2ed;border-radius:20px;padding:8px;text-align:center}
@@ -84,26 +94,31 @@ jobs:
             fr=lang=="fr"
             if kind in ("messages","night"):
               texts=("Bonjour, avez-vous un créneau ?","Appel manqué · 09:42","Jeudi après-midi ?") if fr else ("Can I book for tomorrow?","Message received · 10:47 PM","No reply until morning?")
-              return f'''<div class="visual stack" data-enter="zoom-in"><div class="vlabel">{'DEMANDES ENTRANTES' if fr else 'INCOMING REQUESTS'}</div>
+              return f'''<div class="visual stack" data-enter="zoom"><div class="vlabel">{'DEMANDES ENTRANTES' if fr else 'INCOMING REQUESTS'}</div>
               <div class="notice"><span class="dot mint"></span><div><b>{texts[0]}</b><small>Message</small></div><em>09:41</em></div>
               <div class="notice"><span class="dot amber"></span><div><b>{texts[1]}</b><small>{'Téléphone' if fr else 'Phone'}</small></div><em>09:42</em></div>
               <div class="notice"><span class="dot blue"></span><div><b>{texts[2]}</b><small>Message</small></div><em>09:44</em></div>
               <div class="scatter">{'Plusieurs canaux. Une seule équipe.' if fr else 'Different channels. One busy team.'}</div></div>'''
             if kind in ("booking","booking_en"):
-              return f'''<div class="visual phonewrap" data-enter="zoom-in"><div class="phone"><div class="island"></div><div class="phead"><b>RENDEVO</b><span>•••</span></div>
+              return f'''<div class="visual phonewrap" data-enter="zoom"><div class="phone"><div class="island"></div><div class="phead"><b>RENDEVO</b><span>•••</span></div>
               <div class="ptitle">{'Prendre rendez-vous' if fr else 'Book an appointment'}</div><div class="pcap">{'EXEMPLE DE PARCOURS' if fr else 'ILLUSTRATIVE FLOW'}</div>
               <div class="flabel">{'Choisir un service' if fr else 'Choose a service'}</div><div class="field"><b>Consultation</b><span>⌄</span></div>
               <div class="flabel">{'Choisir une date' if fr else 'Choose a date'}</div><div class="date"><b>{'14 NOV · JEUDI' if fr else 'NOV 14 · THURSDAY'}</b></div>
               <div class="flabel">{'Horaire' if fr else 'Time'}</div><div class="field selected"><b>{'10:30 · Disponible' if fr else '10:30 AM · Available'}</b><span>✓</span></div>
               <div class="send">{'Envoyer la demande' if fr else 'Send request'}　→</div></div></div>'''
+                        if kind in ("calendar","calendar_en"):
+              return f'''<div class="visual" data-enter="zoom"><div class="calendar"><div class="calhead"><b>{'CHOISIR UNE DATE' if fr else 'CHOOSE A DATE'}</b><span>{'NOVEMBRE' if fr else 'NOVEMBER'}</span></div><div class="days">
+              <div class="day">16</div><div class="day">17</div><div class="day active">18</div><div class="day">19</div><div class="day busy">20</div><div class="day">21</div><div class="day">22</div>
+              <div class="day">23</div><div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div><div class="day">29</div></div>
+              <div class="slots"><span class="slot">09:00</span><span class="slot">09:15</span><span class="slot">10:30</span></div></div></div>'''
             if kind in ("sheet","sheet_en"):
-              return f'''<div class="visual workspace" data-enter="zoom-in"><div class="window"><div class="wtop"><i></i><i></i><i></i><b>{'SUIVI DES RENDEZ-VOUS' if fr else 'APPOINTMENT OVERVIEW'}</b></div>
+              return f'''<div class="visual workspace" data-enter="zoom"><div class="window"><div class="wtop"><i></i><i></i><i></i><b>{'SUIVI DES RENDEZ-VOUS' if fr else 'APPOINTMENT OVERVIEW'}</b></div>
               <div class="cols"><span>SERVICE</span><span>DATE</span><span>{'STATUT' if fr else 'STATUS'}</span></div>
               <div class="r"><b>Consultation</b><span>14 NOV</span><em>{'Reçu' if fr else 'Received'}</em></div>
               <div class="r"><b>{'Contrôle' if fr else 'Follow-up'}</b><span>15 NOV</span><em>{'Confirmé' if fr else 'Confirmed'}</em></div>
               <div class="r"><b>{'Nouvelle demande' if fr else 'New request'}</b><span>16 NOV</span><em>{'À traiter' if fr else 'To review'}</em></div></div>
               <div class="mail"><div class="mailicon">✉</div><div><b>{'Confirmation par e-mail' if fr else 'Email confirmation'}</b><small>{'Votre demande a bien été reçue.' if fr else 'Your request has been received.'}</small></div><span>✓</span></div></div>'''
-            return f'''<div class="visual cta" data-enter="zoom-in"><div class="orb"><span>R</span></div><div class="brand">RENDEVO</div><div class="subbrand">BOOKING SYSTEMS</div>
+            return f'''<div class="visual cta" data-enter="zoom"><div class="orb"><span>R</span></div><div class="brand">RENDEVO</div><div class="subbrand">BOOKING SYSTEMS</div>
               <div class="pill">{'ÉCRIVEZ « RENDEVO » EN DM' if fr else 'DM “BOOKING” TO TALK'}　↗</div><div class="tiny">{'Demande en ligne · Suivi · E-mail' if fr else 'Online request · Admin view · Email'}</div></div>'''
           def music(path,dur):
             sr=48000; chords=((73.42,110,146.83,220),(65.41,98,130.81,196),(55,82.41,110,164.81),(61.74,92.5,123.47,185)); a=array.array("h")
