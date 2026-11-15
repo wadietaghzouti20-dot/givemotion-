@@ -1,0 +1,26 @@
+1
+00:00:00,000 --> 00:00:07,512
+Calls, messages, paper notes. Your
+receptionist keeps switching just to
+track one appointment.
+
+2
+00:00:07,692 --> 00:00:13,500
+A clear booking page collects the
+service, date, time and contact
+details.
+
+3
+00:00:13,680 --> 00:00:18,504
+Your team reviews requests and
+appointment status in one admin view.
+
+4
+00:00:18,684 --> 00:00:23,412
+Email confirmations can be configured
+after a request is submitted.
+
+5
+00:00:23,592 --> 00:00:29,280
+Want a clearer booking process? DM
+BOOKING and tell us how you work.

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:05,760
+Deux patients demandent le même
+créneau. Le planning doit éviter
+le conflit.
+
+2
+00:00:05,940 --> 00:00:11,220
+RENDEVO vérifie les réservations
+avant de proposer les horaires
+disponibles.
+
+3
+00:00:11,400 --> 00:00:15,936
+Le patient choisit une date, un
+horaire libre et envoie sa
+demande.
+
+4
+00:00:16,116 --> 00:00:20,196
+Votre équipe suit les demandes et
+leur statut dans un seul tableau.
+
+5
+00:00:20,376 --> 00:00:25,824
+Un cabinet en Algérie ? Écrivez
+RENDEVO en DM pour en parler.
