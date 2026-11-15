@@ -6,7 +6,7 @@ on:
       - .github/workflows/render.yml
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -292,3 +292,19 @@ jobs:
             out/*-verification.json
           if-no-files-found: error
           retention-days: 7
+      - name: Publish downloadable MP4s
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -e
+          mkdir -p /tmp/rendevo-public
+          cp out/RENDEVO_*.mp4 out/RENDEVO_*_cover.jpg out/*-caption.txt out/*.srt out/CONTENT_PLAN.md out/*-verification.json /tmp/rendevo-public/
+          git init /tmp/rendevo-public-repo
+          git -C /tmp/rendevo-public-repo config user.name "github-actions[bot]"
+          git -C /tmp/rendevo-public-repo config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp /tmp/rendevo-public/* /tmp/rendevo-public-repo/
+          git -C /tmp/rendevo-public-repo add .
+          git -C /tmp/rendevo-public-repo commit -m "Daily RENDEVO Reels 2026-11-15"
+          git -C /tmp/rendevo-public-repo remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git -C /tmp/rendevo-public-repo push origin HEAD:reel-deliveries --force
