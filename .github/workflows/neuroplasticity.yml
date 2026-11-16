@@ -37,7 +37,7 @@ jobs:
           v=next(s for s in d["streams"] if s.get("codec_type")=="video")
           sec=float(d["format"]["duration"])
           assert v["codec_name"]=="h264" and v["width"]==1920 and v["height"]==1080
-          assert 650 <= sec <= 670, sec
+          assert 590 <= sec <= 610, sec
           print(f"VERIFIED: {sec/60:.2f} minutes, 1920x1080 H.264")
           PY
       - uses: actions/upload-artifact@v4
