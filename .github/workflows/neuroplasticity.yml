@@ -1,0 +1,66 @@
+name: Neuroplasticite — documentaire universitaire (10 min)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/neuroplasticity.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installer le moteur vidéo et les outils audio
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save givemotion
+          npx givemotion install
+          python -m venv .venv
+          .venv/bin/pip install --upgrade pip edge-tts
+      - name: Générer narration, animations et vidéo finale
+        run: python scripts/build_neuroplasticity.py
+      - name: Vérifier la vidéo
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open("out/verification.json"))
+          v=next(s for s in d["streams"] if s.get("codec_type")=="video")
+          sec=float(d["format"]["duration"])
+          assert v["codec_name"]=="h264" and v["width"]==1920 and v["height"]==1080
+          assert 650 <= sec <= 670, sec
+          print(f"VERIFIED: {sec/60:.2f} minutes, 1920x1080 H.264")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NEUROPLASTICITE-DOCUMENTAIRE-FR-10-MIN
+          path: |
+            out/NEUROPLASTICITE_DOCUMENTAIRE_FR.mp4
+            out/NEUROPLASTICITE_COUVERTURE.jpg
+            out/verification.json
+          retention-days: 30
+      - name: Publier les fichiers téléchargeables dans GitHub
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: \${{ github.repository }}
+        run: |
+          set -e
+          mkdir -p /tmp/neuro-public
+          cp out/NEUROPLASTICITE_DOCUMENTAIRE_FR.mp4 out/NEUROPLASTICITE_COUVERTURE.jpg out/verification.json /tmp/neuro-public/
+          git init /tmp/neuro-public-repo
+          git -C /tmp/neuro-public-repo config user.name "github-actions[bot]"
+          git -C /tmp/neuro-public-repo config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp /tmp/neuro-public/* /tmp/neuro-public-repo/
+          git -C /tmp/neuro-public-repo add .
+          git -C /tmp/neuro-public-repo commit -m "Publish neuroplasticity documentary"
+          git -C /tmp/neuro-public-repo remote add origin "https://x-access-token:\${GITHUB_TOKEN}@github.com/\${GITHUB_REPOSITORY}.git"
+          git -C /tmp/neuro-public-repo push origin HEAD:neuroplasticity-delivery --force
