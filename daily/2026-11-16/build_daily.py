@@ -252,12 +252,29 @@ def build(lang, cfg):
         cursor += sd
     srt_path=OUT/f"{lang}.srt"
     srt_path.write_text("\n".join(srt),encoding="utf-8")
+    ass_path=OUT/f"{lang}.ass"
+    def ass_time(value):
+        centis=int(value*100)
+        return f"{centis//360000}:{(centis%360000)//6000:02d}:{(centis%6000)//100:02d}.{centis%100:02d}"
+    ass_lines=[
+        "[Script Info]","ScriptType: v4.00+","PlayResX: 1080","PlayResY: 1920","WrapStyle: 2","ScaledBorderAndShadow: yes","",
+        "[V4+ Styles]",
+        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
+        "Style: Default,DejaVu Sans,30,&H00FFFFFF,&H000000FF,&H00102028,&H90000000,-1,0,0,0,100,100,0,0,3,1.5,0,2,90,90,250,1","",
+        "[Events]","Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"
+    ]
+    cursor=0.0
+    for scene,spoken,scene_len in zip(cfg["scenes"],durations,scene_durations):
+        text=split_caption(scene["voice"]).replace("\n","\\N").replace("{","\\{").replace("}","\\}")
+        ass_lines.append(f"Dialogue: 0,{ass_time(cursor)},{ass_time(cursor+spoken)},Default,,0,0,0,,{text}")
+        cursor += scene_len
+    ass_path.write_text("\n".join(ass_lines),encoding="utf-8")
     music=OUT/f"{lang}_music.wav"
     make_music(music,total)
     silent=OUT/f"{lang}_silent.mp4"
     run(["npx","givemotion","render",str(html_path),"-o",str(silent),"--quality","standard"])
     final=OUT/cfg["filename"]
-    subtitle_filter=f"subtitles={srt_path}:force_style='FontName=DejaVu Sans,FontSize=22,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BackColour=&H90000000,BorderStyle=3,Outline=1,Shadow=0,Alignment=2,MarginV=145'"
+    subtitle_filter=f"subtitles={ass_path}"
     run([
         "ffmpeg","-y","-i",str(silent),"-i",str(voice_wav),"-i",str(music),
         "-filter_complex","[1:a]volume=1.0[v];[2:a]volume=0.18[m];[v][m]amix=inputs=2:duration=longest:dropout_transition=1,apad=pad_dur=0.4[a]",
