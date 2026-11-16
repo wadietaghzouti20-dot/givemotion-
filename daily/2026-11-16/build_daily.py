@@ -224,7 +224,7 @@ def build(lang, cfg):
     rate=cfg["rate"]
     for i,scene in enumerate(cfg["scenes"],1):
         audio=OUT/f"{lang}_{i:02d}.mp3"
-        run(["edge-tts","--voice",cfg["voice"],f"--rate={rate}","--text",scene["voice"],"--write-media",str(audio)])
+        run([str(ROOT.parents[1] / ".venv" / "bin" / "edge-tts"),"--voice",cfg["voice"],f"--rate={rate}","--text",scene["voice"],"--write-media",str(audio)])
         seg_files.append(audio)
         durations.append(probe_duration(audio))
     total_voice=sum(durations)
@@ -237,10 +237,15 @@ def build(lang, cfg):
         total=sum(scene_durations)
     html_path=COMPS/f"{lang}.html"
     html_path.write_text(make_html(lang,cfg["scenes"],scene_durations),encoding="utf-8")
-    listfile=OUT/f"{lang}_concat.txt"
-    listfile.write_text("".join(f"file '{p.resolve()}'\n" for p in seg_files),encoding="utf-8")
     voice_wav=OUT/f"{lang}_voice.wav"
-    run(["ffmpeg","-y","-f","concat","-safe","0","-i",str(listfile),"-ar","48000","-ac","2","-c:a","pcm_s16le",str(voice_wav)])
+    ff_inputs=sum((["-i",str(p)] for p in seg_files),[])
+    filters=[]
+    for idx,(spoken,scene_len) in enumerate(zip(durations,scene_durations)):
+        pad=max(0.0,scene_len-spoken)+0.03
+        filters.append(f"[{idx}:a]apad=pad_dur={pad:.3f},atrim=duration={scene_len:.3f},asetpts=PTS-STARTPTS[a{idx}]")
+    concat_inputs="".join(f"[a{i}]" for i in range(len(seg_files)))
+    filter_complex=";".join(filters)+f";{concat_inputs}concat=n={len(seg_files)}:v=0:a=1[a]"
+    run(["ffmpeg","-y",*ff_inputs,"-filter_complex",filter_complex,"-map","[a]","-ar","48000","-ac","2","-c:a","pcm_s16le",str(voice_wav)])
     srt=[]; cursor=0.0
     for i,(scene,dur,sd) in enumerate(zip(cfg["scenes"],durations,scene_durations),1):
         srt.append(f"{i}\n{stamp(cursor)} --> {stamp(cursor+dur)}\n{split_caption(scene['voice'])}\n")
