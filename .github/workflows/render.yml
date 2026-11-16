@@ -45,18 +45,18 @@ jobs:
           def wrap(s,w):
             return "\n".join(textwrap.wrap(s,w,break_long_words=False,break_on_hyphens=False))
           data={
-           "fr":{"voice":"fr-FR-DeniseNeural","caption":"Deux demandes pour le même horaire ? Un planning clair aide votre équipe à éviter les conflits de réservation. Avec RENDEVO, les créneaux déjà réservés sont pris en compte et les demandes restent suivies dans un tableau d’administration. Cabinet en Algérie ? Écrivez-nous « RENDEVO » en DM.","tags":"#RENDEVO #Oran #Algerie #ReservationEnLigne #CabinetMedical #GestionDesRendezVous","scenes":[
-            ("LE MÊME CRÉNEAU","Deux demandes. Un horaire.","Un planning doit vérifier les réservations avant de proposer un créneau.","Deux patients demandent le même créneau. Le planning doit éviter le conflit.","conflict"),
-            ("DISPONIBILITÉS VÉRIFIÉES","Le créneau réservé reste bloqué.","Les horaires déjà pris ne sont pas proposés comme disponibles.","RENDEVO vérifie les réservations avant de proposer les horaires disponibles.","booking"),
-            ("CÔTÉ PATIENT","Choisir un horaire libre.","Une page mobile pour sélectionner une date et envoyer une demande.","Le patient choisit une date, un horaire libre et envoie sa demande.","calendar"),
-            ("CÔTÉ ÉQUIPE","Les demandes restent suivies.","Retrouvez les demandes et leur statut dans le tableau d’administration.","Votre équipe suit les demandes et leur statut dans un seul tableau.","sheet"),
-            ("RENDEVO","Un planning plus clair.","Un système de réservation adapté à votre cabinet. Écrivez-nous en DM.","Un cabinet en Algérie ? Écrivez RENDEVO en DM pour en parler.","cta")]},
-           "en":{"voice":"en-US-JennyNeural","caption":"Calls, messages and paper notes can turn appointment admin into constant context-switching. RENDEVO creates a clearer booking journey and a central admin view, with email confirmations configurable for the workflow. Want to discuss your current process? DM “BOOKING”.","tags":"#RENDEVO #OnlineBooking #AppointmentBooking #SmallBusiness #CustomerExperience #BusinessSystems","scenes":[
-            ("THE FRONT DESK","Answer. Check. Write it down.","One appointment can create work across calls, messages and paper notes.","Calls, messages, paper notes. Your receptionist keeps switching just to track one appointment.","desk"),
-            ("A CLEARER FIRST STEP","One booking page. One flow.","Customers can choose a service, date and available time, then send their details.","A clear booking page collects the service, date, time and contact details.","booking_en"),
-            ("YOUR TEAM'S VIEW","Requests in one admin view.","Review incoming requests and appointment status in one place.","Your team reviews requests and appointment status in one admin view.","sheet_en"),
-            ("KEEP CUSTOMERS INFORMED","Email confirmations, configured.","A confirmation message can follow a submitted request.","Email confirmations can be configured after a request is submitted.","mail_en"),
-            ("RENDEVO","Make booking easier to manage.","Booking systems shaped around your appointment process. DM “BOOKING”.","Want a clearer booking process? DM BOOKING and tell us how you work.","cta_en")]}
+           "fr":{"voice":"fr-FR-DeniseNeural","caption":"Même après la fermeture, un patient peut chercher un rendez-vous. Une page de demande en ligne lui permet de consulter les créneaux et d’envoyer sa demande. L’équipe la retrouve ensuite dans son tableau de suivi. Cabinet en Algérie ? Écrivez « RENDEVO » en DM.","tags":"#RENDEVO #Oran #Algerie #RendezVousEnLigne #CabinetMedical #ReservationEnLigne","scenes":[
+            ("APRÈS LA FERMETURE","Il est 22 h 47.","Le cabinet est fermé, mais une demande de rendez-vous peut encore arriver.","Il est 22 h 47. Le cabinet est fermé, mais une personne cherche encore un rendez-vous.","afterhours"),
+            ("UNE PAGE ACCESSIBLE","La demande se fait en ligne.","Le patient peut consulter les créneaux et envoyer une demande depuis son téléphone.","Avec RENDEVO, elle consulte les créneaux disponibles et envoie sa demande en ligne.","booking"),
+            ("CHOISIR UN CRÉNEAU","Date. Horaire. Demande.","Un parcours mobile présente les horaires disponibles avant l’envoi.","Elle choisit une date, un horaire disponible et transmet ses coordonnées.","calendar"),
+            ("CÔTÉ ÉQUIPE","La demande reste visible.","L’équipe retrouve la demande et son statut dans le tableau d’administration.","Le lendemain, l’équipe retrouve la demande dans son tableau de suivi.","sheet"),
+            ("RENDEVO","Même après la fermeture.","Un parcours de réservation plus clair pour votre cabinet.","Vous gérez un cabinet ? Écrivez RENDEVO en DM.","cta")]},
+           "en":{"voice":"en-US-JennyNeural","caption":"A missed call doesn’t have to be the end of the booking journey. A clear online request page gives patients another way to choose a service, date and available time. Your team can follow incoming requests from an admin view. Want to explore this for your clinic? DM “BOOKING”.","tags":"#RENDEVO #ClinicBooking #OnlineAppointments #PatientExperience #AppointmentSystem #RENDEVOdz","scenes":[
+            ("MISSED THE CALL?","Give them a next step.","A booking page can let patients send a request when the phone is busy.","Missed the call? Give patients a clear next step with an online appointment request.","missedcall"),
+            ("THE BOOKING PAGE","A simple online request.","Patients can choose a service, date and available time, then send their details.","A clear booking page lets patients choose a service, date and available time.","booking_en"),
+            ("CHOOSE A TIME","See the available slots.","The mobile flow shows date and time options before a request is sent.","They choose a date and available time, then send their request.","calendar_en"),
+            ("YOUR TEAM’S VIEW","Requests in one place.","Review incoming appointment requests and their status in the admin view.","Your team follows incoming requests from one admin view.","sheet_en"),
+            ("RENDEVO","A clearer next step.","Explore a booking workflow shaped around your clinic.","Want to explore this for your clinic? DM BOOKING.","cta_en")]}
           }
           css="""
           *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131c;color:#f5f8f8;font-family:Arial,Helvetica,sans-serif}
@@ -111,6 +111,21 @@ jobs:
           .deskcard.paper{background:#e9d9bd;color:#243b3b;transform:translateY(10px) rotate(2deg)}.deskcard.paper small,.deskcard.paper em{color:#66756e}
           .deskcard.clock{background:#1b4c4b;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.deskcard.clock b{font-size:52px;color:#d8f5e8}.deskcard.clock em{color:#a8d8c6}
           .deskfooter{font-size:16px;color:#9ab0b6;letter-spacing:1px;margin:42px 0 0 10px}
+          .afterhours{height:850px;padding:86px 8px 0 25px}
+          .nightcard{background:linear-gradient(145deg,#183b48,#102833);border:1px solid rgba(141,226,193,.28);border-radius:26px;padding:30px;margin:0 0 22px;box-shadow:0 24px 55px rgba(0,0,0,.25)}
+          .nighttime{font-size:76px;letter-spacing:-4px;font-weight:800;color:#dff8ed}.nightlabel{font-size:15px;letter-spacing:3px;color:#8de2c1;margin:10px 0 0}
+          .nightrequest{display:flex;gap:17px;align-items:center;background:#f2f6f4;color:#19343a;border-radius:19px;padding:23px;margin:0 0 18px}
+          .nighticon{width:52px;height:52px;border-radius:15px;background:#d9eee6;color:#176d63;display:grid;place-items:center;font-size:25px;font-weight:800;flex:none}
+          .nightrequest b{font-size:19px;display:block}.nightrequest small{font-size:14px;color:#6e8587;display:block;margin-top:7px}
+          .nightfoot{font-size:15px;letter-spacing:2px;color:#8de2c1;margin:24px 0 0 8px}
+          .missedcall{height:850px;padding:88px 12px 0 24px}
+          .callpanel{background:#f3f7f6;color:#19353b;border-radius:28px;padding:28px 25px;box-shadow:0 28px 70px rgba(0,0,0,.3);transform:rotate(-1deg)}
+          .calltop{display:flex;justify-content:space-between;font-size:13px;letter-spacing:2px;color:#6a8185;margin-bottom:28px}
+          .callrow{display:flex;align-items:center;gap:17px;padding:22px 0;border-top:1px solid #dfe8e6}
+          .callbadge{width:58px;height:58px;border-radius:50%;background:#f5e2df;color:#b55d55;display:grid;place-items:center;font-size:27px;font-weight:800;flex:none}
+          .callrow b{font-size:20px;display:block}.callrow small{font-size:14px;color:#70868a;display:block;margin-top:7px}
+          .nextstep{margin-top:26px;background:#173d45;color:#f4faf7;border-radius:20px;padding:24px}
+          .nextstep small{font-size:13px;letter-spacing:2px;color:#8de2c1}.nextstep b{display:block;font-size:22px;margin-top:13px}.nextstep em{display:block;font-size:14px;color:#b5c9c8;font-style:normal;margin-top:9px}
           """
           def vis(kind,lang):
             fr=lang=="fr"
@@ -120,7 +135,16 @@ jobs:
               <div class="request"><span class="avatar">B</span><div><b>{'Même créneau · 10:30' if fr else 'Same slot · 10:30'}</b><small>{'Créneau déjà réservé' if fr else 'Already reserved'}</small></div><em>02</em></div>
               <div class="calendar-mini"><div class="calrow"><span>10:15</span><span class="slot-ok">{'Disponible' if fr else 'Available'}</span></div><div class="calrow"><span>10:30</span><span class="slot-no">{'Réservé' if fr else 'Reserved'}</span></div><div class="calrow"><span>10:45</span><span class="slot-ok">{'Disponible' if fr else 'Available'}</span></div></div>
               <div class="checknote">{'VÉRIFIER AVANT DE PROPOSER' if fr else 'CHECK BEFORE OFFERING'}</div></div>'''
-            if kind=="desk":
+            if kind=="afterhours":
+              return f'''<div class="visual afterhours" data-enter="zoom"><div class="nightcard"><div class="nighttime">22:47</div><div class="nightlabel">APRÈS LA FERMETURE</div></div>
+              <div class="nightrequest"><span class="nighticon">✉</span><div><b>Demande de rendez-vous</b><small>Reçue en ligne · À consulter</small></div></div>
+              <div class="nightrequest"><span class="nighticon">✓</span><div><b>Page de réservation accessible</b><small>Le patient peut envoyer sa demande</small></div></div>
+              <div class="nightfoot">UNE DEMANDE PEUT ARRIVER APRÈS 18 H</div></div>'''
+            if kind=="missedcall":
+              return f'''<div class="visual missedcall" data-enter="zoom"><div class="callpanel"><div class="calltop"><span>CLINIC PHONE</span><span>09:42</span></div>
+              <div class="callrow"><span class="callbadge">↘</span><div><b>Missed call</b><small>Incoming call · No answer</small></div></div>
+              <div class="callrow"><span class="callbadge" style="background:#e4f0ed;color:#176d63">↗</span><div><b>Online booking page</b><small>A clear next step for patients</small></div></div>
+              <div class="nextstep"><small>ANOTHER WAY TO SEND A REQUEST</small><b>Choose a service. Pick a time.</b><em>Send an appointment request online.</em></div></div></div>'''            if kind=="desk":
               return f'''<div class="visual desk" data-enter="zoom"><div class="deskbar">FRONT DESK / MONDAY</div><div class="deskgrid">
               <div class="deskcard"><small>PHONE</small><b>Missed call</b><em>09:42 · Callback needed</em></div>
               <div class="deskcard"><small>MESSAGE</small><b>Can I book?</b><em>09:44 · New request</em></div>
@@ -197,60 +221,60 @@ jobs:
             (OUT/f"{lang}.ass").write_text("\n".join(ass_lines),encoding="utf-8")
             (OUT/f"{lang}-caption.txt").write_text(d["caption"]+"\n\n"+d["tags"]+"\n\nVOICEOVER:\n"+"\n".join(x[3] for x in d["scenes"]),encoding="utf-8")
             print(f"Prepared {lang}: {total:.2f}s, female neural voice.")
-          plan="""# RENDEVO content package — 15 November 2026
+          plan="""# RENDEVO content package — 16 November 2026
 
           ## Finished Reel 1 — French / Algeria
-          **Working title:** Deux demandes. Un horaire.
-          **Pillar:** Double bookings / availability checking.
-          **Hook:** « Deux demandes. Un horaire. »
-          **Audience:** Algerian clinics and appointment-based businesses evaluating a booking workflow.
-          **Format:** 9:16, 1080×1920, H.264, 30 fps, 15–30 seconds, French female neural voice, synchronized burned-in subtitles, original generated ambient audio.
-          **Visual progression:** Two requests appear for the same slot → the reserved time is visibly blocked → mobile booking flow shows a free time → admin request overview → RENDEVO CTA.
-          **Voiceover:** Deux patients demandent le même créneau. Le planning doit éviter le conflit. RENDEVO vérifie les réservations avant de proposer les horaires disponibles. Le patient choisit une date, un horaire libre et envoie sa demande. Votre équipe suit les demandes et leur statut dans un seul tableau. Un cabinet en Algérie ? Écrivez RENDEVO en DM pour en parler.
-          **Caption:** Deux demandes pour le même horaire ? Un planning clair aide votre équipe à éviter les conflits de réservation. Avec RENDEVO, les créneaux déjà réservés sont pris en compte et les demandes restent suivies dans un tableau d’administration. Cabinet en Algérie ? Écrivez-nous « RENDEVO » en DM.
-          **Hashtags:** #RENDEVO #Oran #Algerie #ReservationEnLigne #CabinetMedical #GestionDesRendezVous
+          **Working title:** Même après la fermeture.
+          **Pillar:** After-hours booking requests.
+          **Hook:** « Il est 22 h 47. »
+          **Audience:** Algerian clinics and appointment-based practices.
+          **Format:** 9:16, 1080×1920, H.264, 30 fps, 15–30 seconds; French neural voiceover, synchronized burned-in subtitles and original generated ambient audio.
+          **Visual progression:** A late-night 22:47 time card → an online appointment request → mobile service/date/time selection → admin request overview → RENDEVO CTA.
+          **Voiceover:** Il est 22 h 47. Le cabinet est fermé, mais une personne cherche encore un rendez-vous. Avec RENDEVO, elle consulte les créneaux disponibles et envoie sa demande en ligne. Elle choisit une date, un horaire disponible et transmet ses coordonnées. Le lendemain, l’équipe retrouve la demande dans son tableau de suivi. Vous gérez un cabinet ? Écrivez RENDEVO en DM.
+          **Caption:** Même après la fermeture, un patient peut chercher un rendez-vous. Une page de demande en ligne lui permet de consulter les créneaux et d’envoyer sa demande. L’équipe la retrouve ensuite dans son tableau de suivi. Cabinet en Algérie ? Écrivez « RENDEVO » en DM.
+          **Hashtags:** #RENDEVO #Oran #Algerie #RendezVousEnLigne #CabinetMedical #ReservationEnLigne
           **Single CTA:** Écrivez « RENDEVO » en DM.
 
           ## Finished Reel 2 — English / International
-          **Working title:** Your front desk, in five tabs.
-          **Pillar:** Receptionist workload / customer experience.
-          **Hook:** “Answer. Check. Write it down.”
-          **Audience:** International appointment-based businesses; the visuals demonstrate a configurable booking workflow, not a claim of existing deployments in every sector.
-          **Format:** 9:16, 1080×1920, H.264, 30 fps, 15–30 seconds, English female neural voice, synchronized burned-in subtitles, original generated ambient audio.
-          **Visual progression:** Phone, message and paper notes compete for attention → mobile booking flow → central admin overview → email confirmation → RENDEVO CTA.
-          **Voiceover:** Calls, messages, paper notes. Your receptionist keeps switching just to track one appointment. A clear booking page collects the service, date, time and contact details. Your team reviews requests and appointment status in one admin view. Email confirmations can be configured after a request is submitted. Want a clearer booking process? DM BOOKING and tell us how you work.
-          **Caption:** Calls, messages and paper notes can turn appointment admin into constant context-switching. RENDEVO creates a clearer booking journey and a central admin view, with email confirmations configurable for the workflow. Want to discuss your current process? DM “BOOKING”.
-          **Hashtags:** #RENDEVO #OnlineBooking #AppointmentBooking #SmallBusiness #CustomerExperience #BusinessSystems
+          **Working title:** Missed the call? Give them a next step.
+          **Pillar:** Missed calls / patient experience.
+          **Hook:** “Missed the call? Give them a next step.”
+          **Audience:** International clinics exploring a clearer online appointment-request journey. This is not a claim of a live deployment in every country or clinic.
+          **Format:** 9:16, 1080×1920, H.264, 30 fps, 15–30 seconds; English neural voiceover, synchronized burned-in subtitles and original generated ambient audio.
+          **Visual progression:** A missed-call screen → a clear online booking page → date and available-time selection → central admin overview → RENDEVO CTA.
+          **Voiceover:** Missed the call? Give patients a clear next step with an online appointment request. A clear booking page lets patients choose a service, date and available time. They choose a date and available time, then send their request. Your team follows incoming requests from one admin view. Want to explore this for your clinic? DM BOOKING.
+          **Caption:** A missed call doesn’t have to be the end of the booking journey. A clear online request page gives patients another way to choose a service, date and available time. Your team can follow incoming requests from an admin view. Want to explore this for your clinic? DM “BOOKING”.
+          **Hashtags:** #RENDEVO #ClinicBooking #OnlineAppointments #PatientExperience #AppointmentSystem #RENDEVOdz
           **Single CTA:** DM “BOOKING”.
 
-          ## Backup queue
+          ## Three backup Reel concepts
 
-          ### 1. A cancellation without another phone call
-          - **Hook:** « Un rendez-vous annulé ne devrait pas devenir dix messages. »
-          - **Format/language:** 20-second French mini-story, fast cuts followed by a calm product reveal.
-          - **Scenes:** Patient opens a cancellation link → cancellation page confirms the request → appointment status changes in the admin view → RENDEVO end card.
-          - **Caption:** Un lien d’annulation peut simplifier le parcours lorsqu’il est activé dans votre système de réservation. Parlons de votre organisation.
+          ### 1. WhatsApp scheduling chaos — French
+          - **Hook:** « Un rendez-vous ne devrait pas se perdre dans 18 messages. »
+          - **Format:** 20-second fast-paced mini-story with a clean product reveal.
+          - **Scene plan:** A message thread becomes cluttered → a booking link gives the patient a structured request page → the request appears in the admin view → RENDEVO end card.
+          - **Caption:** Si les demandes arrivent par messages, un lien de réservation peut donner un parcours plus clair. L’intégration WhatsApp n’est pas incluse par défaut.
           - **CTA:** Écrivez « RENDEVO » en DM.
-          - **Audience:** Algerian clinics already using or considering online appointment requests.
+          - **Target audience:** Algerian clinics; do not imply a WhatsApp integration.
 
-          ### 2. The first impression happens before the appointment
-          - **Hook:** “Your customer meets your booking process before they meet you.”
-          - **Format/language:** 15–20-second English premium commercial, calm camera movement and close-up interface shots.
-          - **Scenes:** Customer searches for booking details → opens a branded mobile page → reviews service and time → submits a request → simple brand close.
-          - **Caption:** A clear first step makes it easier for customers to understand how to request an appointment. Explore a booking flow shaped around your process.
+          ### 2. A salon appointment starts before the chair — English
+          - **Hook:** “The appointment experience starts before the customer walks in.”
+          - **Format:** 20-second premium commercial with close-up service cards and a booking-flow concept.
+          - **Scene plan:** Customer looks for an appointment → service and duration selection concept → request summary → admin overview → RENDEVO close.
+          - **Caption:** A clear booking journey can make it easier to request an appointment. Salon-specific services and durations would need to be configured and tested before launch.
           - **CTA:** DM “BOOKING”.
-          - **Audience:** International appointment-based businesses. Any non-clinic sector adaptation must be scoped before claiming it is live.
+          - **Target audience:** International salon owners; concept only, not a claim of a live salon deployment.
 
-          ### 3. A tutor’s week, without the notebook shuffle
-          - **Hook:** « Trois élèves. Trois horaires. Un planning à garder clair. »
-          - **Format/language:** 20–25-second French/Algerian mini-story.
-          - **Scenes:** Tutor checks paper notes and messages → a sample booking page shows a lesson request → an admin view organizes requests → end card.
-          - **Caption:** Pour les activités sur rendez-vous, un parcours de demande clair peut aider à mieux organiser les créneaux. L’adaptation à une activité de cours particuliers reste à configurer.
+          ### 3. Repair appointments without the back-and-forth — French
+          - **Hook:** « Pour une réparation, commencez par un créneau clair. »
+          - **Format:** 20–25-second realistic mini-story.
+          - **Scene plan:** Customer asks when to bring an item → a sample appointment request page → admin request overview → RENDEVO end card.
+          - **Caption:** Un parcours de demande peut aider à structurer les prises de rendez-vous. L’adaptation aux réparateurs doit être définie et testée avant toute mise en service.
           - **CTA:** Écrivez « RENDEVO » en DM.
-          - **Audience:** Algerian tutors and independent instructors; concept only until the workflow is configured and tested for this sector.
+          - **Target audience:** Algerian repair services; concept only until configured.
 
-          **Publishing:** Publish the French and English Reels as separate posts. Review the rendered voice, subtitles, duration and sample UI before posting. The interface visuals are illustrative; do not present them as client results, testimonials or proof of deployments in sectors that have not been configured.
-          """
+          **Publishing:** Keep the French and English Reels as separate posts. Review voice, subtitle timing, duration and illustrative UI before publishing. Do not present sample screens as customer results, testimonials or proof of deployments in sectors not yet configured.
+          """""
           (OUT/"CONTENT_PLAN.md").write_text(plan,encoding="utf-8")
           PY
           python3 /tmp/build.py
@@ -264,9 +288,9 @@ jobs:
             npx givemotion render "compositions/daily-$lang.html" -o "out/$lang-silent.mp4" --quality standard
             ffmpeg -y -i "out/$lang-silent.mp4" -i "out/$lang-voice.wav" -i "out/$lang-music.wav" \
               -filter_complex "[0:v]ass=out/$lang.ass[vout];[1:a]volume=1.0[v];[2:a]volume=0.22[m];[v][m]amix=inputs=2:duration=first:dropout_transition=1[a]" \
-              -map "[vout]" -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -shortest -movflags +faststart "out/RENDEVO_"$up"_2026-11-15.mp4"
-            ffmpeg -y -ss 0.8 -i "out/RENDEVO_"$up"_2026-11-15.mp4" -frames:v 1 -q:v 2 "out/RENDEVO_"$up"_cover.jpg"
-            ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate -show_entries format=duration -of json "out/RENDEVO_"$up"_2026-11-15.mp4" > "out/"$lang"-verification.json"
+              -map "[vout]" -map "[a]" -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -shortest -movflags +faststart "out/RENDEVO_"$up"_2026-11-16.mp4"
+            ffmpeg -y -ss 0.8 -i "out/RENDEVO_"$up"_2026-11-16.mp4" -frames:v 1 -q:v 2 "out/RENDEVO_"$up"_cover.jpg"
+            ffprobe -v error -show_entries stream=codec_type,codec_name,width,height,r_frame_rate -show_entries format=duration -of json "out/RENDEVO_"$up"_2026-11-16.mp4" > "out/"$lang"-verification.json"
             cat "out/"$lang"-verification.json"
           done
           python3 - <<'PY'
@@ -281,7 +305,7 @@ jobs:
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: RENDEVO-Daily-Reels-2026-11-15
+          name: RENDEVO-Daily-Reels-2026-11-16
           path: |
             out/RENDEVO_*.mp4
             out/RENDEVO_*_cover.jpg
@@ -305,6 +329,6 @@ jobs:
           git -C /tmp/rendevo-public-repo config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cp /tmp/rendevo-public/* /tmp/rendevo-public-repo/
           git -C /tmp/rendevo-public-repo add .
-          git -C /tmp/rendevo-public-repo commit -m "Daily RENDEVO Reels 2026-11-15"
+          git -C /tmp/rendevo-public-repo commit -m "Daily RENDEVO Reels 2026-11-16"
           git -C /tmp/rendevo-public-repo remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git -C /tmp/rendevo-public-repo push origin HEAD:reel-deliveries --force
