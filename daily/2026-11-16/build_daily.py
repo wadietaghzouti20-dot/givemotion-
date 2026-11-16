@@ -84,7 +84,7 @@ REELS = {
 CSS = r"""
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131c;color:#f5faf7;font-family:Arial,Helvetica,sans-serif}
-.scene{width:1080px;height:1920px;position:relative;overflow:hidden;padding:150px 64px 170px;display:grid;grid-template-columns:545px 390px;column-gap:45px;align-items:center}
+.scene{width:1080px;height:1920px;position:relative;overflow:hidden;padding:150px 64px 170px;display:grid;grid-template-columns:500px 350px;column-gap:35px;align-items:center}
 .scene.fr{background:radial-gradient(ellipse at 88% 12%,#155547 0%,transparent 42%),radial-gradient(ellipse at 4% 82%,#183b45 0%,transparent 40%),linear-gradient(145deg,#06131c,#10272f 60%,#07131c)}
 .scene.en{background:radial-gradient(ellipse at 82% 14%,#d8edff 0%,transparent 43%),radial-gradient(ellipse at 8% 85%,#d5f1e8 0%,transparent 40%),linear-gradient(145deg,#f6fafc,#e9f1f5 60%,#f7fbfc);color:#102b40}
 .scene:before{content:"";position:absolute;width:850px;height:850px;border:1px solid #8ee5c21c;border-radius:50%;right:-500px;top:360px;animation:orbit 36s linear infinite}
@@ -101,9 +101,9 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07131c;col
 .copy{position:relative;z-index:3;animation:rise .75s .12s both}
 .eyebrow{font-size:18px;letter-spacing:3px;font-weight:800;color:#8ee5c2;line-height:1.35;margin-bottom:34px}
 .en .eyebrow{color:#2476a5}
-h1{font-size:76px;line-height:1.03;letter-spacing:-3.4px;margin:0 0 35px;font-weight:900;overflow-wrap:anywhere}
-.en h1{font-size:72px;color:#102b40}
-.bodycopy{font-size:33px;line-height:1.38;color:#bed0cf;margin:0;max-width:530px}
+h1{font-size:68px;line-height:1.03;letter-spacing:-3.4px;margin:0 0 35px;font-weight:900;overflow-wrap:anywhere}
+.en h1{font-size:66px;color:#102b40}
+.bodycopy{font-size:29px;line-height:1.38;color:#bed0cf;margin:0;max-width:530px}
 .en .bodycopy{color:#526b7b}
 .rule{width:140px;height:4px;background:#8ee5c2;margin-top:42px}
 .en .rule{background:#2476a5}
@@ -111,19 +111,19 @@ h1{font-size:76px;line-height:1.03;letter-spacing:-3.4px;margin:0 0 35px;font-we
 .footer{position:absolute;bottom:75px;left:68px;right:68px;z-index:5;display:flex;justify-content:space-between;color:#77949a;font-size:15px;letter-spacing:3px}
 .en .footer{color:#6f8795}
 .card{border-radius:30px;box-shadow:0 35px 80px #0005;animation:float 5s ease-in-out infinite}
-.desk{width:390px;background:#102d37;border:1px solid #45655f;padding:28px}
+.desk{width:350px;background:#102d37;border:1px solid #45655f;padding:28px}
 .deskhead{display:flex;justify-content:space-between;font-size:16px;color:#dcece6;letter-spacing:1.3px;margin-bottom:24px}
 .deskhead span:last-child{color:#8ee5c2}
 .task{padding:22px 17px;border-radius:16px;background:#173c43;margin-top:15px;display:flex;align-items:center;gap:13px;color:#e8f2ee;font-size:18px;line-height:1.25}
 .bubble{width:15px;height:15px;flex:none;border-radius:50%;background:#8ee5c2;box-shadow:0 0 18px #8ee5c277}
-.phone{width:350px;min-height:650px;border:9px solid #d8e6df;border-radius:48px;background:#f8fbf9;color:#183a31;padding:28px 22px;box-shadow:0 32px 75px #0007;transform:rotate(-2deg);animation:float 5.4s ease-in-out infinite}
+.phone{width:330px;min-height:650px;border:9px solid #d8e6df;border-radius:48px;background:#f8fbf9;color:#183a31;padding:28px 22px;box-shadow:0 32px 75px #0007;transform:rotate(-2deg);animation:float 5.4s ease-in-out infinite}
 .notch{width:100px;height:15px;border-radius:0 0 14px 14px;background:#d8e6df;margin:-28px auto 29px}
 .screenbrand{font-size:15px;letter-spacing:3px;color:#53776b;font-weight:900}
 .screenhead{font-size:27px;line-height:1.1;font-weight:900;margin:27px 0 23px}
 .field{padding:18px 15px;margin:13px 0;border-radius:13px;border:1px solid #d8e4de;background:white;color:#71847b;font-size:17px}
 .action{padding:18px;text-align:center;background:#145c4b;color:white;border-radius:13px;font-size:17px;font-weight:900;margin-top:21px}
 .en .action{background:#216d99}
-.panel{width:400px;background:#102d37;border:1px solid #476960;border-radius:25px;padding:27px;box-shadow:0 30px 70px #0007;animation:float 5.2s ease-in-out infinite}
+.panel{width:350px;background:#102d37;border:1px solid #476960;border-radius:25px;padding:27px;box-shadow:0 30px 70px #0007;animation:float 5.2s ease-in-out infinite}
 .en .panel{background:#fff;border-color:#d4e0e7}
 .paneltop{display:flex;justify-content:space-between;color:#e7f3ed;font-size:16px;letter-spacing:1.2px;margin-bottom:20px}
 .en .paneltop{color:#18384b}
@@ -133,13 +133,13 @@ h1{font-size:76px;line-height:1.03;letter-spacing:-3.4px;margin:0 0 35px;font-we
 .en .rowitem{border-color:#e4ebef;color:#28485b}
 .status{margin-left:auto;font-size:12px;color:#8ee5c2;background:#8ee5c21c;padding:8px 10px;border-radius:18px;white-space:nowrap}
 .en .status{color:#2476a5;background:#e6f3fb}
-.callcard{width:380px;background:#f8fbfd;border-radius:28px;padding:32px;color:#16374d;box-shadow:0 30px 70px #0005;animation:float 5s ease-in-out infinite}
+.callcard{width:350px;background:#f8fbfd;border-radius:28px;padding:32px;color:#16374d;box-shadow:0 30px 70px #0005;animation:float 5s ease-in-out infinite}
 .calltop{font-size:15px;letter-spacing:2px;color:#688393}
 .callicon{width:140px;height:140px;border-radius:50%;background:#e5f0f7;margin:36px auto;display:grid;place-items:center;font-size:70px;color:#2878a7;animation:pulse 2.2s infinite}
 .calltitle{text-align:center;font-size:28px;font-weight:900}
 .callsub{text-align:center;color:#748b9a;font-size:16px;margin-top:12px}
 .timepill{padding:17px;border-radius:13px;background:#eaf3f8;text-align:center;color:#2878a7;font-weight:800;margin-top:25px}
-.endcard{width:390px;min-height:590px;border-radius:32px;background:#0c2935;border:1px solid #4e7d78;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;box-shadow:0 32px 80px #0007;animation:float 5s ease-in-out infinite}
+.endcard{width:350px;min-height:590px;border-radius:32px;background:#0c2935;border:1px solid #4e7d78;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;box-shadow:0 32px 80px #0007;animation:float 5s ease-in-out infinite}
 .endmark{font-size:110px;font-weight:900;color:#e7f5ee;letter-spacing:-8px}
 .endmark span{color:#8ee5c2}
 .en .endmark span{color:#78bfe7}
