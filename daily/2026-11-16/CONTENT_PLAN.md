@@ -1,7 +1,7 @@
 # RENDEVO — Daily Instagram production package
 **Date:** 16 November 2026  
 **Account:** @rendevo.dz  
-**Status:** Givemotion workflow updated in `.github/workflows/render.yml`. The connected GitHub interface does not expose a workflow-dispatch or run-list action, so the Actions MP4 artifact cannot yet be verified from this session. Local fallback renders are being prepared separately; do not describe them as Givemotion artifacts.
+**Status:** Givemotion workflow and this source package are committed. The connected GitHub interface does not expose a workflow-dispatch or run-list action, and the `reel-deliveries` branch still contains the 15 November outputs, so no 16 November Givemotion artifact can be verified. Two local FFmpeg fallback MP4s have been rendered and technically verified; their offline eSpeak voiceovers are synthetic rather than natural neural narration.
 
 ## Finished Reel concept 1 — French / Algeria
 **Title:** Même après la fermeture.  
@@ -9,7 +9,7 @@
 **Audience:** Algerian clinics and appointment-based practices.  
 **Target duration:** 18–22 seconds.  
 **Format:** 9:16, 1080×1920, H.264 MP4, 30 fps.  
-**Voice:** French female neural voice in Givemotion pipeline (fr-FR-DeniseNeural).  
+**Pipeline voice target:** French neural voice (fr-FR-DeniseNeural). **Local fallback:** offline synthetic French voice; replace with the neural pipeline render before treating as final.  
 **Audio:** Original generated ambient bed, low under narration.  
 **Subtitles:** Burned-in French subtitles, timed per voiceover scene.
 
@@ -33,7 +33,7 @@ Même après la fermeture, un patient peut chercher un rendez-vous. Une page de 
 **Audience:** International clinics exploring a clearer online appointment-request journey. This is not a claim of a live deployment in every country or clinic.  
 **Target duration:** 18–22 seconds.  
 **Format:** 9:16, 1080×1920, H.264 MP4, 30 fps.  
-**Voice:** English female neural voice in Givemotion pipeline (en-US-JennyNeural).  
+**Pipeline voice target:** English neural voice (en-US-JennyNeural). **Local fallback:** offline synthetic English voice; replace with the neural pipeline render before treating as final.  
 **Audio:** Original generated ambient bed, low under narration.  
 **Subtitles:** Burned-in English subtitles, timed per voiceover scene.
 
