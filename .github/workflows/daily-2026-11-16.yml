@@ -1,0 +1,68 @@
+name: RENDEVO Daily Reels — 16 Nov 2026
+on:
+  push:
+    branches:
+      - daily/2026-11-16-production
+    paths:
+      - "daily/2026-11-16/**"
+      - ".github/workflows/daily-2026-11-16.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install FFmpeg and Givemotion
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save givemotion
+          npx givemotion install
+          npx givemotion doctor
+      - name: Install Edge neural voices
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install edge-tts
+      - name: Render French and English Reels
+        env:
+          GIVEMOTION_NO_SANDBOX: "1"
+        run: |
+          .venv/bin/python daily/2026-11-16/build_daily.py
+      - name: Verify both MP4s
+        run: |
+          python - <<'PY'
+          import glob, json, subprocess, os
+          files = sorted(glob.glob("daily/2026-11-16/out/RENDEVO_*.mp4"))
+          assert len(files) == 2, f"Expected exactly 2 MP4s, got {len(files)}"
+          for f in files:
+              meta = json.loads(subprocess.check_output([
+                  "ffprobe", "-v", "error", "-show_entries",
+                  "stream=codec_name,codec_type,width,height,r_frame_rate:format=duration",
+                  "-of", "json", f
+              ]))
+              v = next(s for s in meta["streams"] if s["codec_type"] == "video")
+              a = next(s for s in meta["streams"] if s["codec_type"] == "audio")
+              duration = float(meta["format"]["duration"])
+              assert v["codec_name"] == "h264" and v["width"] == 1080 and v["height"] == 1920
+              assert a["codec_name"] == "aac" and 15 <= duration <= 30
+              print(os.path.basename(f), round(duration, 2), "sec", v["width"], "x", v["height"], v["codec_name"], a["codec_name"], os.path.getsize(f), "bytes")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RENDEVO-Daily-2026-11-16-FR-EN
+          path: |
+            daily/2026-11-16/out/*
+            daily/2026-11-16/compositions/*.html
+            daily/2026-11-16/CONTENT_PLAN.md
+          if-no-files-found: error
+          retention-days: 7
