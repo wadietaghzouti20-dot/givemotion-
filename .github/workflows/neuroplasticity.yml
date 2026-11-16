@@ -25,6 +25,12 @@ jobs:
           sudo apt-get install -y ffmpeg
           npm install --no-save givemotion
           npx givemotion install
+          CHROME_BIN="$(find "$HOME/.cache/puppeteer" -type f -name chrome | head -n 1)"
+          if [ -z "$CHROME_BIN" ]; then echo "Puppeteer Chrome binary not found"; find "$HOME/.cache/puppeteer" -maxdepth 5 -type f | head -n 30; exit 1; fi
+          mkdir -p "$RUNNER_TEMP/chrome-wrapper"
+          printf '#!/bin/sh\nexec "%s" --no-sandbox --disable-setuid-sandbox "$@"\n' "$CHROME_BIN" > "$RUNNER_TEMP/chrome-wrapper/chrome"
+          chmod +x "$RUNNER_TEMP/chrome-wrapper/chrome"
+          echo "PUPPETEER_EXECUTABLE_PATH=$RUNNER_TEMP/chrome-wrapper/chrome" >> "$GITHUB_ENV"
           python -m venv .venv
           .venv/bin/pip install --upgrade pip edge-tts
       - name: Générer narration, animations et vidéo finale
