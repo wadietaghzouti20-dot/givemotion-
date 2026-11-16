@@ -106,6 +106,8 @@ def visual_for(i, title):
         return '<div class="panel"><div class="label">ÉCHELLE CELLULAIRE</div><div class="nodes"><div class="node">DENDRITES</div><div class="line"></div><div class="node">SOMA</div><div class="line"></div><div class="node">AXONE</div></div><div class="callout">Signal électrique → libération de neurotransmetteurs → réponse postsynaptique</div><div class="small">Schéma conceptuel simplifié — les circuits réels sont beaucoup plus complexes.</div></div>'
     if i in (8,9,10,11,12,13,14,15,16,17):
         return '<div class="panel"><div class="label">ADAPTATION DES RÉSEAUX</div><div class="big">EXPÉRIENCE</div><div class="nodes"><div class="node">ACTIVITÉ</div><div class="line"></div><div class="node">AJUSTEMENT</div><div class="line"></div><div class="node">CONSOLIDATION</div></div><div class="callout">La pratique modifie les probabilités et l’efficacité des connexions sollicitées.</div></div>'
+    if i==20:
+        return '<div class="panel"><div class="label">RÉFÉRENCES SCIENTIFIQUES</div><div style="font-size:21px;line-height:1.55;color:#d7e4e4">Bliss &amp; Lømo (1973), Journal of Physiology<br>Kandel (2001), Science<br>Maguire et al. (2000), PNAS<br>Draganski et al. (2004), Nature<br>Nudo et al. (1996), Journal of Neuroscience<br>Lövdén et al. (2010), Psychological Bulletin</div><div class="callout">Schémas illustratifs ; résultats scientifiques synthétisés pour cette présentation.</div></div>'
     if i==18:
         return '<div class="panel"><div class="label">OUTILS DE RECHERCHE</div><div class="bars"><div class="bar" style="height:85%"><span>EEG</span></div><div class="bar" style="height:65%"><span>IRM</span></div><div class="bar" style="height:100%"><span>ÉLECTROPHYSIOLOGIE</span></div><div class="bar" style="height:75%"><span>MODÈLES</span></div></div><div class="small">Chaque méthode observe une échelle différente et possède ses propres limites.</div></div>'
     return '<div class="panel"><div class="label">UNE PROPRIÉTÉ FONDAMENTALE DU VIVANT</div><div class="big">LE CERVEAU<br><span style="color:#8ce0cf">S’ADAPTE.</span></div><div class="nodes"><div class="node">STRUCTURE</div><div class="line"></div><div class="node">FONCTION</div><div class="line"></div><div class="node">RÉSEAUX</div></div><div class="callout">Comprendre le changement, c’est comprendre une partie de l’apprentissage.</div></div>'
@@ -120,15 +122,6 @@ for i,ch in enumerate(chapters,1):
       <div class="footer"><span>LE CERVEAU QUI SE TRANSFORME</span><span>{i:02d} / 20</span></div><div class="progress"><i style="width:{i*5}%"></i></div>
     </section>''')
 # Dedicated title and bibliography/end-credit cards are each 30 seconds.
-parts.insert(0,'''<section class="scene" data-duration="30" data-camera="push 1.04"><div class="top"><div class="brand">DOCUMENTAIRE SCIENTIFIQUE</div><div class="chapter">NEUROSCIENCES</div></div><div style="position:absolute;left:120px;top:265px;z-index:2"><div class="kicker">LE CERVEAU QUI SE TRANSFORME</div><div style="font-size:112px;font-weight:800;line-height:1.0;max-width:1250px">NEURO<br><span style="color:#8ce0cf">PLASTICITÉ</span></div><div class="sub" style="margin-top:35px">Comment l’expérience remodèle le cerveau humain</div></div><div class="visual" style="position:absolute;right:100px;top:180px;width:700px"><div class="panel"><div class="nodes"><div class="node">EXPÉRIENCE</div><div class="line"></div><div class="node">SYNAPSE</div><div class="line"></div><div class="node">RÉSEAU</div></div><div class="big" style="font-size:42px;text-align:center;color:#8ce0cf">APPRENDRE<br>TRANSFORME</div></div></div><div class="footer"><span>PRÉSENTATION UNIVERSITAIRE</span><span>10:00</span></div></section>''')
-parts.append('''<section class="scene" data-duration="30"><div class="top"><div class="brand">RÉFÉRENCES SCIENTIFIQUES</div><div class="chapter">POUR ALLER PLUS LOIN</div></div><div style="position:absolute;left:120px;right:120px;top:190px"><div class="kicker">SÉLECTION DE TRAVAUX FONDATEURS</div><div style="font-size:28px;line-height:1.65;color:#d7e4e4">
-• Bliss &amp; Lømo (1973), Long-lasting potentiation of synaptic transmission in the dentate area of the anaesthetized rabbit, Journal of Physiology.<br>
-• Kandel (2001), The molecular biology of memory storage: a dialogue between genes and synapses, Science.<br>
-• Maguire et al. (2000), Navigation-related structural change in the hippocampi of taxi drivers, PNAS.<br>
-• Draganski et al. (2004), Neuroplasticity: changes in grey matter induced by training, Nature.<br>
-• Nudo et al. (1996), Use-dependent alterations of movement representations in primary motor cortex, Journal of Neuroscience.<br>
-• Lövdén et al. (2010), A theoretical framework for the study of adult cognitive plasticity, Psychological Bulletin.
-</div><div class="callout">Les résultats scientifiques ont été simplifiés pour la présentation. Les schémas sont illustratifs et ne représentent pas des données expérimentales.</div></div><div class="footer"><span>FIN DU DOCUMENTAIRE</span><span>MERCI</span></div></section>''')
 page=f'''<!doctype html><html lang="fr" data-width="1920" data-height="1080" data-fps="30"><head><meta charset="utf-8"><style>{css}</style></head><body><main data-sequence data-transition="fade 0.6">{"".join(parts)}</main></body></html>'''
 (ROOT/"compositions").mkdir(exist_ok=True)
 (ROOT/"compositions/neuroplasticity.html").write_text(page,encoding="utf-8")
@@ -143,7 +136,7 @@ for name, text in [("title","Neuroplasticité : comment l’expérience remodèl
     run([".venv/bin/edge-tts","--voice","fr-FR-DeniseNeural","--rate=-6%","--text",text,"--write-media",str(mp3)])
     run(["ffmpeg","-y","-i",str(mp3),"-af","apad=whole_dur=30,atrim=duration=30","-ar","48000","-ac","2",str(wav)])
 # Title segment, 20 chapter segments, reference segment = 660 seconds; trim composition to exact same length.
-all_audio=[TMP/"title.wav"]+voice_files+[TMP/"refs.wav"]
+all_audio=voice_files
 with open(TMP/"all.txt","w") as f:
     for p in all_audio: f.write(f"file '{p}'\n")
 run(["ffmpeg","-y","-f","concat","-safe","0","-i",str(TMP/"all.txt"),"-c:a","pcm_s16le",str(OUT/"narration.wav")])
