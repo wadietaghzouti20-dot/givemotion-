@@ -274,7 +274,7 @@ jobs:
           - **Target audience:** Algerian repair services; concept only until configured.
 
           **Publishing:** Keep the French and English Reels as separate posts. Review voice, subtitle timing, duration and illustrative UI before publishing. Do not present sample screens as customer results, testimonials or proof of deployments in sectors not yet configured.
-          """""
+          """
           (OUT/"CONTENT_PLAN.md").write_text(plan,encoding="utf-8")
           PY
           python3 /tmp/build.py
