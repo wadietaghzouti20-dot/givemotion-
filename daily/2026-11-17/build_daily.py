@@ -22,7 +22,7 @@ REELS = json.loads(r'''{
         "eyebrow": "AVANT L’ENVOI",
         "headline": "LES DISPONIBILITÉS SONT VÉRIFIÉES.",
         "body": "Les horaires déjà occupés ne sont pas proposés.",
-        "kind": "booking",
+        "kind": "phone",
         "voice": "RENDEVO vérifie les créneaux déjà réservés avant d’afficher les disponibilités."
       },
       {
@@ -202,7 +202,7 @@ def visual_markup(kind, lang):
         return """<div class="phone"><div class="notch"></div><div class="screenbrand">RENDEVO</div><div class="screenhead">Book an appointment</div><div class="field">Service · Consultation</div><div class="field">Date · Select a date</div><div class="field">Time · Available slot</div><div class="action">SEND REQUEST</div></div>"""
     if kind=="admin":
         return """<div class="panel"><div class="paneltop"><span>CLINIC ADMIN</span><span>● INBOX</span></div><div class="rowitem"><i class="bubble"></i><span>New request</span><b class="status">Received</b></div><div class="rowitem"><i class="bubble"></i><span>Patient details</span><b class="status">Saved</b></div><div class="rowitem"><i class="bubble"></i><span>Email confirmation</span><b class="status">Configurable</b></div></div>"""
-    return """<div class="endcard"><div class="endmark">RENDE<span>VO</span></div><div class="endline">BOOKING SYSTEMS</div><div class="endcta">DM RENDEVO</div></div>""" if lang=="fr" else """<div class="endcard"><div class="endmark">RENDE<span>VO</span></div><div class="endline">BOOKING SYSTEMS</div><div class="endcta">DM “BOOKING”</div></div>"""
+    return """<div class="endcard"><div class="endmark">RENDE<span>VO</span></div><div class="endline">SYSTÈMES DE RÉSERVATION</div><div class="endcta">ÉCRIVEZ RENDEVO EN DM</div></div>""" if lang=="fr" else """<div class="endcard"><div class="endmark">RENDE<span>VO</span></div><div class="endline">BOOKING SYSTEMS</div><div class="endcta">DM “BOOKING”</div></div>"""
 
 def make_html(lang, scenes, durations):
     sections=[]
