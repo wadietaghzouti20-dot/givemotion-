@@ -225,7 +225,7 @@ def make_html(lang, scenes, durations):
   <div class="visual">{visual_markup(scene['kind'],lang)}</div>
   <div class="footer"><span>{'SYSTÈME DE RÉSERVATION' if lang=='fr' else 'ONLINE APPOINTMENTS'}</span><span>RENDEVO · {i:02d}</span></div>
 </section>""")
-    html_doc=f"""<!doctype html><html lang="{lang}" data-width="1080" data-height="1920" data-fps="30"><head><meta charset="utf-8"><meta name="viewport" content="width=1080,height=1920"><title>RENDEVO {lang.upper()} Daily Reel</title><style>{CSS}</style></head><body><main data-sequence data-transition="fade 0.28">{''.join(sections)}</main></body></html>"""
+    html_doc=f"""<!doctype html><html lang="{lang}" data-width="1080" data-height="1920" data-fps="30"><head><meta charset="utf-8"><meta name="viewport" content="width=1080,height=1920"><title>RENDEVO {lang.upper()} Daily Reel</title><style>{CSS}</style></head><body><main data-sequence data-transition="fade 0.05">{''.join(sections)}</main></body></html>"""
     return html_doc
 
 def make_music(path, duration):
